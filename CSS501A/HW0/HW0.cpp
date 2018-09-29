@@ -1,6 +1,6 @@
 
 /*
-I want a technology to allow my mind to think of codes and type on a screen. This way, we programmers can speed up our train of thoughts.
+I want a technology to allow my mind to think of codes and be able to type on a screen. This way, we programmers can speed up our train of thoughts.
 */
 
 #include <iostream>
