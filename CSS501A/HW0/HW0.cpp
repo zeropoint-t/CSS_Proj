@@ -12,10 +12,13 @@ it will have an impact on how we collect and cosume energy for our needs.
 using namespace std;
 
 double CalculatePower(int, int);
+void FlushCinBuffer();
 
 int main(int argc, const char * argv[]) {
-
+    
+    //local veriables to hold base and power numbers
     int base = -1, power = -1;
+
     while(true){
         cout << endl;
         cout << "Let's calculate the power of a number! (base number 0 to exit)" << endl;
@@ -29,8 +32,7 @@ int main(int argc, const char * argv[]) {
 
         //non numeric value was entered. Show error message and skip the rest of while loop
         if(cin.fail()){
-            cin.clear();
-            cin.ignore();
+            FlushCinBuffer();
             cerr << "Error: Base must be a numeric value!!" << endl << endl;
             continue;
         }
@@ -42,19 +44,21 @@ int main(int argc, const char * argv[]) {
             break;
         }
 
+        FlushCinBuffer();
         cout << "To the power of? ";
         //obtain power from a user
         cin >> usr_val;
         power = usr_val;
         if(cin.fail()){
-            cin.clear();
-            cin.ignore();
+            FlushCinBuffer();
             cerr << "Error: Power must be a numeric value!!" << endl << endl;
             continue;
         }
 
         double result = CalculatePower(base, power);
         cout << base << " ^ " << power << " = " << result << endl;
+
+        FlushCinBuffer();
     }
 
     return 0;
@@ -77,4 +81,9 @@ double CalculatePower(int base, int power){
         return 1;
     }
     return 0;
+}
+
+void FlushCinBuffer(){
+    cin.clear();
+    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');    
 }
