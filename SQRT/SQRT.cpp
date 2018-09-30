@@ -69,6 +69,7 @@ typedef unsigned long long ULONG;
 // 	return x;
 // } 
 
+//Brute Force
 int sqrt1(int x) {
     ULONG a = 1;
     while (a * a <= x) {
@@ -78,6 +79,10 @@ int sqrt1(int x) {
     return --a;
 }
 
+// We notice that a * a is expensive, how to get rid of that?
+//(n+1)^2 = n^2 + 2n + 1
+// Therefore, we can just add 2 to a variable delta and add it to current variable a to get 
+// the square of a + 1.
 int sqrt2(int x) {
     int count = 0;
     ULONG a = 1;
@@ -100,6 +105,39 @@ int sqrt2(int x) {
     return delta / 2 - 1;
 }
 
+//Binary Search
+int sqrt3(int x) {
+    ULONG l = 0, r = x;
+    while (l <= r) {
+        ULONG mid = l + (r - l) / 2; // (l + r) / 2;
+        ULONG midmid = mid * mid;
+        // check if x falls into [mid^2, (mid + 1)^2) 
+        if ((midmid <= x) && (x < (mid + 1) * (mid + 1))) 
+            return mid;
+
+        if (midmid > x) {
+            r = mid - 1;
+        } else {
+            l = mid + 1;
+        }
+    }
+}
+
+int sqrt_newton(int x) {
+    if (x==0) 
+        return x;
+
+    double dividend = x;  
+    double val = x;
+    double last;
+    
+    do {  
+        last = val;  
+        val = (val + dividend / val) * 0.5;  
+    } while(abs(val - last) > 1e-9); // precision
+    return (int)val;        
+}
+
 int main(int argc, const char * argv[]) {
 
     int value = 248;
@@ -112,6 +150,18 @@ int main(int argc, const char * argv[]) {
 
     int result2 = sqrt2(value);
     cout << "result is: " << result2 << endl;
+
+    cout << endl;
+    cout << endl;
+
+    int result3 = sqrt3(value);
+    cout << "result is: " << result3 << endl;
+
+    cout << endl;
+    cout << endl;
+
+    int result4 = sqrt_newton(value);
+    cout << "result is: " << result4 << endl;
 
     return 0;
 }
