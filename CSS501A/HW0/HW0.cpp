@@ -8,6 +8,7 @@ it will have an impact on how we collect and cosume energy for our needs.
 #include <iostream>
 #include <string>
 #include <sstream>
+#include <limits>
 
 using namespace std;
 
@@ -15,7 +16,7 @@ double CalculatePower(int, int);
 void FlushCinBuffer();
 
 int main(int argc, const char * argv[]) {
-    
+
     //local veriables to hold base and power numbers
     int base = -1, power = -1;
 
@@ -85,5 +86,5 @@ double CalculatePower(int base, int power){
 
 void FlushCinBuffer(){
     cin.clear();
-    cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');    
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');    
 }
