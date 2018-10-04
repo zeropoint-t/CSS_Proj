@@ -6,6 +6,11 @@ Rational::Rational()
 	denominator = 1;
 }
 
+Rational::Rational(const Rational& rat){
+	numerator = rat.numerator;
+	denominator = rat.denominator;
+}
+
 Rational::Rational(int num, int den)
 {
 	if (den == 0)
@@ -23,6 +28,7 @@ Rational::Rational(int num, int den)
 
 Rational::~Rational()
 {
+	cout << this << " is being destroyed" << endl;
 }
 
 int Rational::getNumerator() const
@@ -45,6 +51,18 @@ bool Rational::setValue(int num, int den)
 	denominator = den;
 	reduce();
 	return true;
+}
+
+Rational Rational::hi(){
+	Rational rat1(20,20), rat2(40,40);
+	cout << "rat: " << &rat1 << endl;
+	cout << "rat: " << &rat2 << endl;
+	int a = 1;
+	if(a == 1){
+		return rat1;
+	}else{
+		return rat2;
+	}
 }
 
 void Rational::reduce()
@@ -107,18 +125,29 @@ Rational& Rational::operator/=(const Rational &rat)
 
 Rational Rational::operator+(const Rational &rat) const
 {
+	cout << "this: " << this << endl;
 	Rational result = *this;
+	cout << "result: " << &result << endl;
 	result += rat;
 	return result;
 }
 
-Rational& Rational::operator+=(const Rational &rat)
+void Rational::operator+=(const Rational &rat)
 {
+	cout << "this: " << this << endl;
 	numerator = (numerator * rat.denominator) + (rat.numerator * denominator);
 	denominator = denominator * rat.denominator;
 	reduce();
-	return *this;
 }
+
+// Rational& Rational::operator+=(const Rational &rat)
+// {
+// 	cout << "this: " << this << endl;
+// 	numerator = (numerator * rat.denominator) + (rat.numerator * denominator);
+// 	denominator = denominator * rat.denominator;
+// 	reduce();
+// 	return *this;
+// }
 
 Rational Rational::operator-(const Rational &rat) const
 {
