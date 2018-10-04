@@ -14,6 +14,7 @@ public:
 
 // Constructors - Destructor
 	Rational();
+	Rational(const Rational& rat);
 	Rational(int num, int den);
 	~Rational();
 
@@ -22,7 +23,10 @@ public:
 	int getDemnominator() const;
 	bool setValue(int num, int den);
 
+	Rational hi();
+
 // Op Overloads
+
 	Rational operator*(const Rational &rat) const;
 	Rational& operator*=(const Rational &rat);
 
@@ -33,7 +37,8 @@ public:
 	Rational& operator-=(const Rational &rat);
 
 	Rational operator+(const Rational &rat) const;
-	Rational& operator+=(const Rational &rat);
+	void operator+=(const Rational &rat);
+	// Rational& operator+=(const Rational &rat);
 
 	Rational operator-() const;
 

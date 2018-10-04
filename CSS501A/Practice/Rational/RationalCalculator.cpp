@@ -8,55 +8,69 @@
 using namespace std;
 
 
-class Check
-{
-  friend ostream& operator<<(ostream &outStream, const Check &check);
+// class Check
+// {
+//   friend ostream& operator<<(ostream &outStream, const Check &check);
 
-  private:
-    int i;
-  public:
-    Check(): i(0) {  }
-    Check operator ++ ()
-    {
-        Check temp;
-        temp.i = ++i;
-        return temp;
-    }
+//   private:
+//     int i;
+//   public:
+//     Check(): i(0) {  }
+//     Check operator ++ ()
+//     {
+//         Check temp;
+//         temp.i = ++i;
+//         return temp;
+//     }
 
-    // Notice int inside barcket which indicates postfix increment.
-    Check operator ++ (int)
-    {
-        Check temp;
-        temp.i = i++;
-        return temp;
-    }
+//     // Notice int inside barcket which indicates postfix increment.
+//     Check operator ++ (int)
+//     {
+//         Check temp;
+//         temp.i = i++;
+//         return temp;
+//     }
 
-    void Display()
-    { cout << "i = "<< i <<endl; }
-};
+//     void Display()
+//     { cout << "i = "<< i <<endl; }
+// };
 
-ostream& operator<<(ostream &outStream, const Check &check)
-{
-	outStream << check.i;
-	return outStream;
-}
+// ostream& operator<<(ostream &outStream, const Check &check)
+// {
+// 	outStream << check.i;
+// 	return outStream;
+// }
 
-ostream& operator<<(ostream &outStream, const Check &check)
-{
-	outStream << check.i;
-	return outStream;
-}
+// ostream& operator<<(ostream &outStream, const Check &check)
+// {
+// 	outStream << check.i;
+// 	return outStream;
+// }
 
 int main()
 {
-    Check obj;    
-    obj.Display(); 
-    obj++;
-    ++obj;
+    // Check obj;    
+    // obj.Display(); 
+    // obj++;
+    // ++obj;
 
-    cout << obj << endl;
+    // cout << obj << endl;
 
 	int waitVar;
+
+	// Rational rat1(3, 7), rat2(5, 10);
+	// cout << "rat1: " << &rat1 << endl;
+	// cout << "rat2: " << &rat2 << endl;
+	// Rational rat3 = rat1 + rat2;
+
+	// cout << "rat3: " << &rat3 << endl;
+
+	Rational rat1(3, 7);
+	cout << "rat1: " << &rat1 << endl;
+	Rational rat = rat1.hi();
+	cout << "rat: " << &rat << endl;
+	int a = 0;
+
 	// Rational rat1(3, 7), rat2(5, 10);
 	// Rational rat3, rat4, rat5, rat6;
 	// cout << "Welcome to our calculator" << endl;
