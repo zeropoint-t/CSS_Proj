@@ -1,5 +1,6 @@
 #include "PersonalExpense.h"
 #include <iostream>
+#include <typeinfo>
 
 //Constructor
 PersonalExpense::PersonalExpense(){}
