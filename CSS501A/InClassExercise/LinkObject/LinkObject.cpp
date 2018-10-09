@@ -8,38 +8,39 @@ using namespace std;
 
 class LinkedList{
     public:
-        LinkedList():head(nullptr){}
-        LinkedList(Node* head):head(head){}
+        LinkedList():head(nullptr),size(0){}
+        LinkedList(Node* head):head(head),size(1){}
         void insert(Node* item){//insert at the beginning
             if(head == nullptr){
                 head = item;
+                tail = item;
             }else{
                 item->setNext(head);
+                head->setPrev(item);
                 head = item;
             }
-            ++count;
+            ++size;
         }
         bool insert(Node* item, int index){
             if(index == 0){
                 insert(item);
-                ++count;
                 return true;
             }
-            else if(index > 0 && index <= count){
-                int c = 1;
-                Node* prev = head;
-                Node* current = prev->getNext();
+            else if(index > 0 && index <= size){
+                int c = 0;
+                Node* current = head;
                 while(c++ < index){
-                    prev = prev->getNext();
-                    current = prev->getNext();
+                    current = current->getNext();
                 }
+                Node* prev = current->getPrev();
                 item->setNext(current);
+                current->setPrev(item);
                 prev->setNext(item);
+                item->setPrev(prev);
 
-                ++count;
+                ++size;
                 return true;
             }
-            ++count;
             return false;
         }
         void insert(string item, int index){
@@ -52,21 +53,36 @@ class LinkedList{
                 Node* nodeToRemove = head;
                 Node* next = head->getNext();
                 head = next;
-
-                delete nodeToRemove;
-                nodeToRemove = nullptr;
-                return true;
-            }else if(index>0 && index < count){
-                int c = 1;
-                Node* prev = head;
-                Node* nodeToRemove = prev->getNext();
-                while(c++ < index){
-                    prev = prev->getNext();
-                    nodeToRemove = prev->getNext();
+                if(head != nullptr){
+                    head->setPrev(nullptr);
+                    //no more element left so tail should point to null
+                    tail = nullptr;
                 }
-                prev->setNext(nodeToRemove->getNext());
+
+                nodeToRemove->setNext(nullptr);
+                nodeToRemove->setPrev(nullptr);
                 delete nodeToRemove;
                 nodeToRemove = nullptr;
+
+                --size;
+                return true;
+            }else if(index>0 && index < size){
+                int c = 0;
+                Node* nodeToRemove = head;
+                while(c++ < index){
+                   nodeToRemove = nodeToRemove->getNext();
+                }
+                
+                Node* prev = nodeToRemove->getPrev();
+                prev->setNext(nodeToRemove->getNext());
+                nodeToRemove->getNext()->setPrev(prev);
+
+                nodeToRemove->setNext(nullptr);
+                nodeToRemove->setPrev(nullptr);
+                delete nodeToRemove;
+                nodeToRemove = nullptr;
+
+                --size;
                 return true;
             }
             return false;
@@ -76,22 +92,30 @@ class LinkedList{
         }
         void clear(){
             while(!isEmpty()){
-                remove(1);
+                remove(0);
             }
         }
         bool isEmpty(){
-            return count == 0;
+            return this->size == 0;
         }
-        void display(){
+        void displayForward(){
             Node* n = head;
             while(n != nullptr){
                 cout << n->getItem() << endl;
                 n = n->getNext();
             }
         }
+        void displayBackward(){
+            Node* n = tail;
+            while(n != nullptr){
+                cout << n->getItem() << endl;
+                n = n->getPrev();
+            }
+        }
     private:
         Node* head;
-        int count;
+        Node* tail;
+        int size;
 };
 
 #endif

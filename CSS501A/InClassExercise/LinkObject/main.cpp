@@ -14,12 +14,22 @@ int main(int argc, const char* argv[]){
     ll.insert(n1);
     ll.insert(n2);
     ll.insert(n3);
+    ll.insert(n4,2);
 
-    bool isSuccess = ll.insert(n4,2);
-    ll.display();
+    ll.displayForward();
 
-    cout << endl;
+    bool removed = ll.remove(2);
 
-    bool isRemoved = ll.remove(3);
-    ll.display();
+    // bool isSuccess = ll.insert(n4,2);
+
+    ll.displayForward();
+    // ll.displayBackward();
+
+    // cout << endl;
+
+    // bool isRemoved = ll.remove(3);
+    // ll.displayForward();
+
+    ll.clear();
+    ll.displayBackward();
 }
