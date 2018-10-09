@@ -18,6 +18,4 @@ class PersonalExpense{
         vector<ExpenseElement*> expenses;
 };
 
-#include "PersonalExpense.cpp"
-
 #endif
