@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "g++ -g -std=c++11 ${workspaceFolder}/CSS501A/HW1/main.cpp -o ${workspaceFolder}/CSS501A/HW1/main",
+            "command": "g++ -g -std=c++11 ${workspaceFolder}/CSS501A/InClassExercise/LinkObject/main.cpp -o ${workspaceFolder}/CSS501A/InClassExercise/LinkObject/main",
             "group":{
                 "kind": "build",
                 "isDefault": true

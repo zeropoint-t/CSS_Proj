@@ -8,7 +8,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/CSS501A/HW1/main",
+            "program": "${workspaceFolder}/CSS501A/InClassExercise/LinkObject/main",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
