@@ -22,26 +22,35 @@ class LinkedList{
             ++size;
         }
         bool insert(Node* item, int index){
-            if(index == 0){
-                insert(item);
-                return true;
-            }
-            else if(index > 0 && index <= size){
-                int c = 0;
-                Node* current = head;
-                while(c++ < index){
-                    current = current->getNext();
+            bool canInsert = (index >= 0 && index <= size);
+            if(canInsert){
+                if(index == 0){
+                    //insert at the beginning
+                    insert(item);
                 }
-                Node* prev = current->getPrev();
-                item->setNext(current);
-                current->setPrev(item);
-                prev->setNext(item);
-                item->setPrev(prev);
+                else {
+                    int c = 0;
+                    Node* current = head;
+                    while(c++ < index){
+                        current = current->getNext();
+                    }
 
+                    if(current == nullptr){
+                        //insert at the end
+                        tail->setNext(item);
+                        item->setPrev(tail);
+                        tail = item;
+                    }else{
+                        Node* prev = current->getPrev();
+                        item->setNext(current);
+                        current->setPrev(item);
+                        prev->setNext(item);
+                        item->setPrev(prev);
+                    }
+                }
                 ++size;
-                return true;
             }
-            return false;
+            return canInsert;
         }
         void insert(string item, int index){
             Node* newItem = new Node(item);
@@ -49,47 +58,63 @@ class LinkedList{
         }
 
         bool remove(int index){
-            if(index == 0){
-                Node* nodeToRemove = head;
-                Node* next = head->getNext();
-                head = next;
-                if(head != nullptr){
-                    head->setPrev(nullptr);
-                    //no more element left so tail should point to null
+
+            bool canRemove = (index >= 0 && index < size);
+            if(canRemove){
+                if(size == 1){
+                    //only node is removed
+                    Node* nodeToRemove = head;
+                    delete nodeToRemove;
+                    head = nullptr;
                     tail = nullptr;
+                }else{
+                    //find node to remove
+                    int c = 0;
+                    Node* nodeToRemove = head;
+                    while(c++ < index){
+                        nodeToRemove = nodeToRemove->getNext();
+                    }
+
+                    //get previous node
+                    Node* prev = nodeToRemove->getPrev();
+                    Node* next = nodeToRemove->getNext();
+
+                    //first node to be removed
+                    if(prev == nullptr){
+                        head = next;
+                    }
+
+                    //last node to be removed
+                    if(next == nullptr){
+                        tail = prev;
+                    }
+
+                    //hook up prevous to next
+                    if(prev != nullptr){
+                        prev->setNext(next);
+                    }
+
+                    //hook up next to previous
+                    if(next != nullptr){
+                        next->setPrev(prev);
+                    }
+
+                    nodeToRemove->setNext(nullptr);
+                    nodeToRemove->setPrev(nullptr);
+                    delete nodeToRemove;
                 }
-
-                nodeToRemove->setNext(nullptr);
-                nodeToRemove->setPrev(nullptr);
-                delete nodeToRemove;
-                nodeToRemove = nullptr;
-
-                --size;
-                return true;
-            }else if(index>0 && index < size){
-                int c = 0;
-                Node* nodeToRemove = head;
-                while(c++ < index){
-                   nodeToRemove = nodeToRemove->getNext();
-                }
-                
-                Node* prev = nodeToRemove->getPrev();
-                prev->setNext(nodeToRemove->getNext());
-                nodeToRemove->getNext()->setPrev(prev);
-
-                nodeToRemove->setNext(nullptr);
-                nodeToRemove->setPrev(nullptr);
-                delete nodeToRemove;
-                nodeToRemove = nullptr;
-
-                --size;
-                return true;
             }
-            return false;
+
+            if(canRemove)
+                --size;
+
+            return canRemove;
         }
+
         string get(int index){
             return "";
         }
+
         void clear(){
             while(!isEmpty()){
                 remove(0);

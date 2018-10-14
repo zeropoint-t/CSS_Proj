@@ -10,6 +10,9 @@ class Node{
         Node():next(nullptr){};
         Node(string item):item(item),next(nullptr),prev(nullptr){};
         Node(string item, Node* next, Node* prev):item(item),next(next),prev(prev){}
+        ~Node(){
+            cout << "Node being destroyed" << endl;
+        }
         
         Node* getNext(){
             return next;
