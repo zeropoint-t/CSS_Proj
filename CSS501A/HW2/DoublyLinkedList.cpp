@@ -7,9 +7,7 @@
 using namespace std;
 
 DoublyLinkedList::DoublyLinkedList():size(0),head(nullptr),tail(nullptr){
-
 }
-
 DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& list):size(0),head(nullptr),tail(nullptr){
     //implement deep copy
     if(list.head == nullptr){
@@ -37,19 +35,15 @@ DoublyLinkedList::DoublyLinkedList(const DoublyLinkedList& list):size(0),head(nu
         }
     }
 }
-
 DoublyLinkedList::~DoublyLinkedList(){
     clear();
 }
-
 bool DoublyLinkedList::isEmpty() const{
     return this->size == 0;
 }
-
 int DoublyLinkedList::getLength() const{
     return this->size;
 }
-
 bool DoublyLinkedList::insert(int newIndex, House& newHouse){
     bool canInsert = (newIndex >= 0 && newIndex <= size);
     if(canInsert){
@@ -84,7 +78,6 @@ bool DoublyLinkedList::insert(int newIndex, House& newHouse){
     }
     return canInsert;
 }
-
 bool DoublyLinkedList::remove(int index){
     bool canRemove = (index >= 0 && index < size);
     if(canRemove){
@@ -132,13 +125,11 @@ bool DoublyLinkedList::remove(int index){
 
     return canRemove;
 }
-
 void DoublyLinkedList::clear(){
     while(!this->isEmpty()){
         this->remove(0);
     }
 }
-
 Node* DoublyLinkedList::getNodeAt(int index) const{
     if(index >= 0 && index < this->size){
         int cnt = 0;
@@ -151,7 +142,6 @@ Node* DoublyLinkedList::getNodeAt(int index) const{
         return nullptr;
     }
 }
-
 void DoublyLinkedList::swapNodes(Node* &n1, Node* &n2){
     if(n1 != nullptr && n2 != nullptr){
         Node* next = n2->getNext();
@@ -187,7 +177,6 @@ void DoublyLinkedList::swapNodes(Node* &n1, Node* &n2){
         n2 = temp_n1;
     }
 }
-
 void DoublyLinkedList::sort(SortType sortType) {
     if(size >= 2){
         for(int indexTo = this->size-2; indexTo >= 0; indexTo--){
@@ -207,7 +196,6 @@ void DoublyLinkedList::sort(SortType sortType) {
         }
     }
 }
-
 DoublyLinkedList DoublyLinkedList::serch(const SearchCriteria& filter) const{
     DoublyLinkedList list;
     Node* curNode = head;
@@ -230,7 +218,6 @@ DoublyLinkedList DoublyLinkedList::serch(const SearchCriteria& filter) const{
     }
     return list;
 }
-
 void DoublyLinkedList::displayForward(){
     Node* n = this->head;
     while(n != nullptr){

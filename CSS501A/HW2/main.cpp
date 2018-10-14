@@ -33,14 +33,14 @@ int main(int argc, const char * argv[]){
     Score score(price_weight, milesFromMainCity_weight, squareFootage_weight, numOfRooms_weight, numOfBathrooms_weight);
 
     //create 10 house objects
-    House h1(&score,240000,8,1500,3,1);
+    House h1(&score,240000,8,1500,2,1);
     House h2(&score,300000,5,1200,3,2);
     House h3(&score,250000,4,1400,3,2);
     House h4(&score,320000,9,1750,3,2);
-    House h5(&score,400000,7,2100,4,3);
+    House h5(&score,400000,7,2100,5,3);
     House h6(&score,350000,6,2200,4,2);
     House h7(&score,210000,4,1470,3,2);
-    House h8(&score,325000,5,1550,3,2);
+    House h8(&score,325000,5,1550,4,2);
     House h9(&score,230000,12,2100,3,2);
     House h10(&score,220000,15,2050,3,1);
 
@@ -59,6 +59,7 @@ int main(int argc, const char * argv[]){
     cout << endl;
 
     //show current list contents from head to tail
+    cout << "-----Show items as they were entered-----" << endl;
     list.displayForward();
 
     //sort the list in descending order by scores
@@ -67,7 +68,7 @@ int main(int argc, const char * argv[]){
     cout << endl;
 
     //show current list contents from head to tail
-    cout << "Descending by Score" << endl;
+    cout << "-----Descending by Score-----" << endl;
     list.displayForward();
 
     cout << endl;
@@ -78,7 +79,7 @@ int main(int argc, const char * argv[]){
     cout << endl;
 
     //show current list contents from head to tail
-    cout << "Ascending by Score" << endl;
+    cout << "-----Ascending by Score-----" << endl;
     list.displayForward();
 
 
@@ -89,7 +90,7 @@ int main(int argc, const char * argv[]){
 
     cout << endl;
     //show search results
-    cout << "Search returned these houses" << endl;
+    cout << "-----Search returned these houses-----" << endl;
     selections.displayForward();
 
 }
