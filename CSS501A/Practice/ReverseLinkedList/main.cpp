@@ -4,7 +4,12 @@ using namespace std;
 
 class Node{
     public:
-        Node(int data):data(data),next(nullptr){}
+        Node(int data):data(data),next(nullptr){
+            cout << "Node with " << data << " is created at " << this << endl;
+        }
+        ~Node(){
+            cout << "Node is with data " << data << " destroyed at " << this << endl;
+        }
         Node* next;
         int data;
 };
@@ -33,11 +38,11 @@ class LinkedList{
             }
         }
 
-        Node* reverseList(Node* n){
+        Node* reverseRecersion(Node* n){
             if(n->next == nullptr){
                 return n;
             }else{
-                Node* tmp = reverseList(n->next);
+                Node* tmp = reverseRecersion(n->next);
                 n->next = nullptr;
                 Node* cur = tmp;
                 while(cur->next != nullptr){
@@ -47,6 +52,49 @@ class LinkedList{
                 return tmp;
             }
         }
+
+        void printInReverseRecursive(Node* n){
+            if(n == nullptr)
+                return;
+            else {
+                printInReverseRecursive(n->next);
+                cout << n->data << endl;
+                return;
+            }
+        }
+
+        void printInReverseIterative(){
+
+            Node* origChain = head;
+            Node* newChain = new Node(origChain->data);
+            Node* newHead = newChain;
+            while(origChain->next != nullptr){
+                origChain = origChain->next;
+                Node* newNode = new Node(origChain->data);
+                newChain->next = newNode;
+                newChain = newChain->next;
+            }
+
+            Node* cur = newHead;
+            Node* prev = nullptr;
+            Node* next = nullptr;
+
+            while(cur != nullptr){
+                next = cur->next;
+                cur->next = prev;
+                prev = cur;
+                cur = next;
+            }
+
+            Node* curNode = prev;
+            while(curNode != nullptr){
+                cout << curNode->data << endl;
+                Node* nodeToDelete = curNode;
+                curNode = curNode->next;
+                delete nodeToDelete;
+            }
+        }
+        
 
         // Node* reverseList2(Node* n){
         //     if(n->next == nullptr){
@@ -64,8 +112,12 @@ class LinkedList{
 int main(int argc, const char* argv[]){
 
     LinkedList list;
-    list.display();
-    list.head = list.reverseList(list.head);//list.reverseList(list.head);
+    // list.display();
+    // cout << endl;
+    // list.printInReverseRecursive(list.head);
+    // // list.head = list.reverseRecersion(list.head);//list.reverseList(list.head);
+    cout << endl;
+    list.printInReverseIterative();
     cout << endl;
     list.display();
 }
