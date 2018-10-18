@@ -179,11 +179,11 @@ void DoublyLinkedList::swapNodes(Node* &n1, Node* &n2){
 }
 void DoublyLinkedList::sort(SortType sortType) {
     if(size >= 2){
-        for(int indexTo = this->size-2; indexTo >= 0; indexTo--){
+        for(int indexTo = this->size-1; indexTo > 0; indexTo--){
             int curIndex = 0;
             Node* n1 = this->head;
             Node* n2 = n1->getNext();
-            while(curIndex++ <= indexTo){
+            while(++curIndex <= indexTo){
                 if((sortType == asc && n1->getData() > n2->getData()) ||
                     (sortType == desc && n1->getData() < n2->getData()))
                 {
