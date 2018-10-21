@@ -11,7 +11,7 @@ class Node{
         Node();
         Node(const Node& node);
         Node(const House& house);
-
+        
         House& getData();
 
         void setNext(Node* next);
