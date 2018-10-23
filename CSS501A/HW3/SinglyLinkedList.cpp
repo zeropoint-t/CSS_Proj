@@ -130,6 +130,7 @@ void SinglyLinkedList::printReverseIterative() const{
             curNode = next;
             pTmpCur = pTmpNext;
         }
+
         //last value in prev is the new head
         Node* nodeToPrint = pTmpPrev;
         while(nodeToPrint != nullptr){
@@ -187,4 +188,103 @@ void SinglyLinkedList::clear(){
     while(head != nullptr){
         remove(0);
     }
+}
+
+string SinglyLinkedList::find(string str, Node* n) const{
+    if(head == nullptr)
+        return "";
+
+    if(n == nullptr){
+        n = this->head;
+    }
+    if(n->getNext() == nullptr)
+        return "";
+
+    if(n->getData() == str){
+        return n->getData();
+    }else{
+        return find(str, n->getNext());
+    }
+}
+
+void SinglyLinkedList::sort_desc(){
+    if(size >= 2){
+        Node* cur = nullptr;
+        Node* prev = nullptr;
+        Node* next = nullptr;
+        for(int i = 0; i < size-1; i++){
+            prev = nullptr;
+            cur = head;
+            next = cur->getNext();
+            bool sorted = true;
+            for(int j = 0; j < size-i-1; j++){
+                if(cur->getData() > next->getData()){
+                    swap(prev,cur,next);
+                    sorted = false;
+                }
+                prev = cur;
+                cur = cur->getNext();
+                next = cur->getNext();
+            }
+            if(sorted)
+                break;
+        }
+    }
+}
+void SinglyLinkedList::sort_asc(){
+    if(size >= 2){
+        Node* cur = nullptr;
+        Node* prev = nullptr;
+        Node* next = nullptr;
+        for(int i = 0; i < size-1; i++){
+            prev = nullptr;
+            cur = head;
+            next = cur->getNext();
+            bool sorted = true;
+            for(int j = 0; j < size-i-1; j++){
+                if(cur->getData() < next->getData()){
+                    swap(prev,cur,next);
+                    sorted = false;
+                }
+                prev = cur;
+                cur = cur->getNext();
+                next = cur->getNext();
+            }
+            if(sorted)
+                break;
+        }
+    }
+}
+
+void SinglyLinkedList::sort_rec(){
+    for(int i = size-1; i > 0; i--){
+        int cnt = i;
+        sort_rec(cnt, nullptr, head);
+    }
+}
+
+void SinglyLinkedList::sort_rec(int& recCnt, Node* prev, Node* cur){
+    if(recCnt-- == 0 || cur->getNext() == nullptr)
+        return;
+
+    Node* next = cur->getNext();
+    if(cur->getData() < cur->getNext()->getData()){
+        swap(prev, cur, next);
+    }
+    sort_rec(recCnt, cur, next);
+}
+
+void SinglyLinkedList::swap(Node* &prev, Node* &cur, Node* &next){
+    if(prev == nullptr){
+        //first 2 elements are swapped
+        head = next;
+    }else{
+        prev->setNext(next);
+    }
+    cur->setNext(next->getNext());
+    next->setNext(cur);
+
+    Node* tmp = next;
+    next = cur;
+    cur = tmp;
 }

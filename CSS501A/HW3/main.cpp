@@ -10,6 +10,7 @@ void print(SinglyLinkedList list){
 }
 
 int main(int argc, const char* argv[]){
+
     //create a singly linked list object
     SinglyLinkedList list;
 
@@ -58,4 +59,26 @@ int main(int argc, const char* argv[]){
 
     cout << "--Show that the original order is maintained--" << endl;
     newList.print();
+
+
+    string foundValue = newList.find("Item 9");
+    cout << foundValue << endl;
+
+    newList.sort_rec();
+    cout << endl;
+    newList.print();
+
+    // newList.sort_asc();
+    // cout << endl;
+    // newList.print();
+
+    // newList.sort_desc();
+    // cout << endl;
+    // newList.print();
+
+    // newList.sort_desc();
+    // cout << endl;
+    // newList.print();
+
+
 }
