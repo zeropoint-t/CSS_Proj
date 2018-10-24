@@ -77,9 +77,11 @@ class Node{
 class DeliveryManager{
     public:
         DeliveryManager(){}
+
         DeliveryManager(Package& pkg){
             add(pkg);
         }
+
         ~DeliveryManager(){
             Node* cur = head;
             while(cur != nullptr){
@@ -88,6 +90,7 @@ class DeliveryManager{
                 delete nodeToRemove;
             }
         };
+
         void add(Package& pkg){
             Node* newNode = new Node(pkg);
             if(head == nullptr){
@@ -100,10 +103,14 @@ class DeliveryManager{
             updateDroneCounts(pkg);
             numOfPackages++;
         };
+
         void sort(){
-            sort(head, numOfPackages);
+            if(numOfPackages >= 2)
+                sort(numOfPackages-1);
         }
+
         Package search(Package& pkg);
+
         void print(){
             Node* cur = head;
             while(cur != nullptr){
@@ -113,6 +120,7 @@ class DeliveryManager{
                 cur = cur->getNext();
             }
         }
+        
     private:
         Node* head = nullptr;
         int numOfPackages = 0;
@@ -123,18 +131,37 @@ class DeliveryManager{
             numOfDronesNeeded = totalPounds / 10 + 1;
         }
 
-        void sort(Node* n, int size){
-            if(size == 1);
+        void sort(int cnt){
+            if(cnt == 0)
                 return;
 
-            Node* cur = n;
-            for(int i = 0; i < size; i++){
-                if(cur->getData().getWeight() > cur->getNext()->getData().getWeight()){
-                    Node* next =cur->getNext();
-                    swap(cur,next);
+            Node* cur = head;
+            Node* prev = nullptr;
+            Node* next = cur->getNext();
+
+            for(int i = 0; i < cnt; i++){   
+                if(cur->getData().getWeight() < next->getData().getWeight()){
+                    swap(prev,cur,next);
                 }
+                prev = cur;
+                cur = next;
+                next = next->getNext();
             }
-            sort(n, size-1);
+            sort(cnt-1);
+        }
+
+        void swap(Node* &prev, Node* &cur, Node* &next){
+            if(prev != nullptr){
+                prev->setNext(next); 
+            }else{
+                head = next;
+            }
+            cur->setNext(next->getNext());
+            next->setNext(cur);
+
+            Node* tmp = next;
+            next = cur;
+            cur = tmp;
         }
 };
 
@@ -143,12 +170,16 @@ int main(){
     Package pkg1("Package 1", 5);
     Package pkg2("Package 2", 7);
     Package pkg3("Package 3", 15);
+    Package pkg4("Package 4", 3);
+    Package pkg5("Package 5", 12);
     // bool pkg1_heavier = pkg1 > pkg2;
 
     DeliveryManager dm;
-    dm.add(pkg1);
-    dm.add(pkg2);
+    dm.add(pkg5);
+    dm.add(pkg4);
     dm.add(pkg3);
+    dm.add(pkg2);
+    dm.add(pkg1);
 
     dm.print();
 
