@@ -5,11 +5,15 @@ using namespace std;
 
 class Package{
     public:
-        Package():description(""),weight(0){
-
+        Package(){
+            // cout << "Package is created at " << this << endl;
         }
         Package(string desc, int wt):description(desc){
+            // cout << "Package is created at " << this << endl;
             setWeight(wt);
+        }
+        ~Package(){
+            // cout << "Package is destroyed at " << this << endl;
         }
         void setDescription(string desc){
             this->description = desc;
@@ -29,13 +33,30 @@ class Package{
         int getWeight() const{
             return this->weight;
         }
+
+        bool operator>(const Package& pkg){
+            if(this->weight > pkg.getWeight())
+                return true;
+            else 
+                return false;
+        }
+        bool operator<(const Package& pkg){
+            if(this->weight > pkg.getWeight())
+                return false;
+            else 
+                return true;
+        }
     private:
-        int weight;
-        string description;
+        int weight = 0;
+        string description = "";
 };
 
 class Node{
     public:
+        Node(Package& pkg):next(nullptr){
+            this->data = pkg;
+            cout << "Node Constr Data contains package of " << &this->data << endl;
+        }
         Node* getNext() const{
             return this->next;
         }
@@ -45,7 +66,7 @@ class Node{
         Package getData() const{
             return this->data;
         }
-        void setData(Package pkg){
+        void setData(Package& pkg){
             this->data = pkg;
         }
     private:
@@ -55,11 +76,82 @@ class Node{
 
 class DeliveryManager{
     public:
-
+        DeliveryManager(){}
+        DeliveryManager(Package& pkg){
+            add(pkg);
+        }
+        ~DeliveryManager(){
+            Node* cur = head;
+            while(cur != nullptr){
+                Node* nodeToRemove = cur;
+                cur = cur->getNext();
+                delete nodeToRemove;
+            }
+        };
+        void add(Package& pkg){
+            Node* newNode = new Node(pkg);
+            if(head == nullptr){
+                head = newNode;
+            }
+            else{
+                newNode->setNext(head);
+                head = newNode;
+            }
+            updateDroneCounts(pkg);
+            numOfPackages++;
+        };
+        void sort(){
+            sort(head, numOfPackages);
+        }
+        Package search(Package& pkg);
+        void print(){
+            Node* cur = head;
+            while(cur != nullptr){
+                Package p = cur->getData();
+                cout << p.getDescription() << ": " << p.getWeight() << endl;
+                p.setDescription("Fake Package");
+                cur = cur->getNext();
+            }
+        }
     private:
-        int numOfPackages;
-        int numOfDronesNeeded;
-        void updateDroneCounts(Node* n){
-            
+        Node* head = nullptr;
+        int numOfPackages = 0;
+        int numOfDronesNeeded = 0;
+        int totalPounds = 0;
+        void updateDroneCounts(Package& pkg){
+            totalPounds += pkg.getWeight();
+            numOfDronesNeeded = totalPounds / 10 + 1;
+        }
+
+        void sort(Node* n, int size){
+            if(size == 1);
+                return;
+
+            Node* cur = n;
+            for(int i = 0; i < size; i++){
+                if(cur->getData().getWeight() > cur->getNext()->getData().getWeight()){
+                    Node* next =cur->getNext();
+                    swap(cur,next);
+                }
+            }
+            sort(n, size-1);
         }
 };
+
+
+int main(){
+    Package pkg1("Package 1", 5);
+    Package pkg2("Package 2", 7);
+    Package pkg3("Package 3", 15);
+    // bool pkg1_heavier = pkg1 > pkg2;
+
+    DeliveryManager dm;
+    dm.add(pkg1);
+    dm.add(pkg2);
+    dm.add(pkg3);
+
+    dm.print();
+
+    dm.sort();
+    dm.print();
+}

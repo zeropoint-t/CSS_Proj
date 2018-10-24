@@ -20,14 +20,19 @@ class LinkedList{
             Node* n1 = new Node(1);
             Node* n2 = new Node(2);
             Node* n3 = new Node(3);
-            Node* n4 = new Node(4);
-            Node* n5 = new Node(5);
+
+            cout << "n1: " << n1 << endl;
+            cout << "n2: " << n2 << endl;
+            cout << "n3: " << n3 << endl;
+            // Node* n4 = new Node(4);
+            // Node* n5 = new Node(5);
             head = n1;
             n1->next = n2;
             n2->next = n3;
-            n3->next = n4;
-            n4->next = n5;
+            // n3->next = n4;
+            // n4->next = n5;
         }
+        Node* tail;
         Node* head;
 
         void display(){
@@ -38,11 +43,11 @@ class LinkedList{
             }
         }
 
-        Node* reverseRecersion(Node* n){
+        Node* reverseRecursion(Node* n){
             if(n->next == nullptr){
                 return n;
             }else{
-                Node* tmp = reverseRecersion(n->next);
+                Node* tmp = reverseRecursion(n->next);
                 n->next = nullptr;
                 Node* cur = tmp;
                 while(cur->next != nullptr){
@@ -64,7 +69,6 @@ class LinkedList{
         }
 
         void printInReverseIterative(){
-
             Node* origChain = head;
             Node* newChain = new Node(origChain->data);
             Node* newHead = newChain;
@@ -95,6 +99,35 @@ class LinkedList{
             }
         }
         
+        void gfg_RecursiveReverse(Node** head_ref) 
+        { 
+            cout << "Pointer to  head: " << head_ref << endl;
+            Node* first; 
+            Node* rest; 
+            
+            /* empty list - head points to null*/
+            if (*head_ref == nullptr) 
+            return;    
+        
+            /* suppose first = {1, 2, 3}, rest = {2, 3} */
+            first = *head_ref;   
+            rest  = first->next;
+        
+            /* List has only one node */
+            if (rest == nullptr) 
+            return;
+        
+            /* reverse the rest list and put the first element at the end */
+            gfg_RecursiveReverse(&rest); 
+            first->next->next  = first;   
+            
+            /* tricky step -- see the diagram */
+            first->next  = nullptr;           
+        
+            /* fix the head pointer */
+            cout << "Pointer to head at the end: " << head_ref << " Chaned to " << rest << endl;
+            *head_ref = rest;          
+        }
 
         // Node* reverseList2(Node* n){
         //     if(n->next == nullptr){
@@ -116,8 +149,18 @@ int main(int argc, const char* argv[]){
     // cout << endl;
     // list.printInReverseRecursive(list.head);
     // // list.head = list.reverseRecersion(list.head);//list.reverseList(list.head);
+    // cout << endl;
+    // list.printInReverseIterative();
+    // cout << endl;
+    // list.display();
+    list.display();
     cout << endl;
-    list.printInReverseIterative();
+
+    cout << &list << endl;
+    cout << &list.head << endl;
+
+    list.gfg_RecursiveReverse(&list.head);
+
     cout << endl;
     list.display();
 }
