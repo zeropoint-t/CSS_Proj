@@ -34,13 +34,13 @@ class Package{
             return this->weight;
         }
 
-        bool operator>(const Package& pkg){
+        bool operator>(const Package& pkg) const{
             if(this->weight > pkg.getWeight())
                 return true;
             else 
                 return false;
         }
-        bool operator<(const Package& pkg){
+        bool operator<(const Package& pkg) const{
             if(this->weight > pkg.getWeight())
                 return false;
             else 
@@ -105,8 +105,14 @@ class DeliveryManager{
         };
 
         void sort(){
-            if(numOfPackages >= 2)
-                sort(numOfPackages-1);
+            // if(numOfPackages >= 2)
+            //     sort(numOfPackages-1);
+
+            bool swapped = false;
+            do{
+                swapped = false;
+                sort_InClassMethod(head, swapped);
+            }while(swapped);
         }
 
         Package search(Package& pkg);
@@ -150,6 +156,22 @@ class DeliveryManager{
             sort(cnt-1);
         }
 
+        void sort_InClassMethod(Node* cur, bool& swapped){
+            if(cur->getNext() == nullptr){
+                return;
+            }
+
+            sort_InClassMethod(cur->getNext(),swapped);
+
+            if(cur->getData() > cur->getNext()->getData()){
+                Package tmp = cur->getNext()->getData();
+                Package curPkg = cur->getData();
+                cur->getNext()->setData(curPkg);
+                cur->setData(tmp);
+                swapped = true;
+            }
+        }
+
         void swap(Node* &prev, Node* &cur, Node* &next){
             if(prev != nullptr){
                 prev->setNext(next); 
@@ -165,8 +187,19 @@ class DeliveryManager{
         }
 };
 
+bool isEvenNumber(int num)
+{
+  for (int i = 0; i < num; i++)
+  {
+     num += i;
+  }
+  return true;
+}
 
 int main(){
+
+    // isEvenNumber(5);
+
     Package pkg1("Package 1", 5);
     Package pkg2("Package 2", 7);
     Package pkg3("Package 3", 15);
