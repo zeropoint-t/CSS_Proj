@@ -196,7 +196,23 @@ bool isEvenNumber(int num)
   return true;
 }
 
+class base{
+    public:
+    virtual void method1(){
+        cout << "Base Class" << endl;
+    }
+};
+
+class derived: public base{
+    public:
+    void method1 () {
+        cout << "derived class" << endl;
+    }
+};
+
 int main(){
+    base* b = new derived();
+    b->method1(); 
 
     // isEvenNumber(5);
 
