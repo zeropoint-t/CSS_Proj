@@ -2,34 +2,58 @@
 #include <iostream>
 #include <vector>
 
-#include "DataCompressor.h"
+#include "CompressedString.h"
 using namespace std;
 
 int main(int argc, const char* argv[]){
-    // cout << "Hello World" << endl;
-    // vector<char> nums;
-    // nums.push_back('1');
-    // nums.push_back('2');
-    // nums.push_back('5');
-    DataCompressor dc;
-    dc.compressed.push_back('a');
-    dc.compressed.push_back('a');
-    dc.compressed.push_back('3');
-    dc.compressed.push_back('b');
-    dc.compressed.push_back('4');
-    dc.compressed.push_back('c');
-    dc.compressed.push_back('d');
-    dc.compressed.push_back('d');
-    dc.compressed.push_back('e');
-    dc.compressed.push_back('4');
-    dc.compressed.push_back('f');
-    dc.compressed.push_back('1');
-    dc.compressed.push_back('3');
-    dc.compressed.push_back('3');
-    dc.compressed.push_back('X');
 
-    dc.Decompress();
+    cout << endl;
+
+    //---------------------------------------
+    //string to compress 1
+    cout << "---Demonstration of short string---" << endl;
+    string strToCompress1 = "abc";
+    cout << "String to compress: \t" << strToCompress1 << endl;
+
+    CompressedString cs1(strToCompress1);
+    cs1.DisplayCompressed();
+    cout << cs1 << endl << endl;
+    //---------------------------------------
 
 
+    //---------------------------------------
+    //string to compress 2
+    cout << "---Demonstration of long string---" << endl;
+    string strToCompress2 = "abbbbccccccddeeefgg";
+    cout << "String to compress: \t" << strToCompress2 << endl;
+
+    CompressedString cs2(strToCompress2);
+    cs2.DisplayCompressed();
+    cout << cs2 << endl << endl;
+    //---------------------------------------
+
+
+    //---------------------------------------
+    //string to compress 3
+    cout << "---Demonstration of loooooooooong string---" << endl;
+    string strToCompress3 = "abbbbccccccddeeefffffffffffffffffffffghhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh";//"abcdefghijklmn";
+    cout << "String to compress: \t" << strToCompress3 << endl;
+
+    CompressedString cs3(strToCompress3);
+    cs3.DisplayCompressed();
+    cout << cs3 << endl << endl;
+    //---------------------------------------
+
+
+    //---------------------------------------
+    cout << "***Big-O Analysis***" << endl;
+    cout << "Compress method: It loops through each character in a str parameter n times." << endl;
+    cout << "Vector.push_back has amotized time complexity of O(1)." << endl;
+    cout << "Therefore, compress function operates at O(n) time complexity" << endl << endl;
+
+    cout << "Decompress method: It loops through each character in the \"compressed\" vector once." << endl;
+    cout << "Since the original string contains \"n\" characters and the characters are recreated n times." << endl;
+    cout << "Therefore, decompress function operates at O(n) time complexity" << endl;
+    //----------------------------------------
     return 0;
 }
