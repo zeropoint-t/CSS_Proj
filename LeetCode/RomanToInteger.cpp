@@ -44,6 +44,7 @@ int cvtRomanToNum(char c1, char c2, int& inc){
 }
 
 int main(){
+
     string roman = "LVIII";
     int num = 0;
     for(int i = 0; i < roman.length();i++){
