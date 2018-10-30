@@ -7,6 +7,9 @@ using namespace std;
 
 int main(int argc, const char* argv[]){
 
+    cout << INT_MAX << endl;
+    cout << INT_MIN << endl;
+
     cout << endl;
 
     //---------------------------------------
