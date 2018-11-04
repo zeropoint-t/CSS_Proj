@@ -13,7 +13,7 @@ int main(){
     cout << "*********************************************************" << endl;
     cout << "--Instructions on how to execute this program--" << endl;
     cout << "--Compilation Instruction: use the below command to compile this program--" << endl;
-    cout << "Change a directory path to HW5 directory and execute the code below" << endl;
+    cout << "Change a directory path to HW5 directory and execute the code below--" << endl;
     cout << "g++ -g -std=c++11 ./main.cpp ./Pikachu.cpp -o ./main" << endl;
     cout << "Once the above code compiles the program, execute commend \"./main\" to run this program" << endl;
     cout << "*********************************************************" << endl;
@@ -51,7 +51,7 @@ int main(){
     //create random integer values and insert into a custom set
     Set<Data<int>> demoSet2;
     for(int i = 0; i < 200; i++){
-        int val = rand()%25+1;//i%(rand()%11+1);
+        int val = rand()%15+1;//i%(rand()%11+1);
         Data<int> intData(val);
         demoSet2.Insert(intData);
     }
@@ -87,7 +87,7 @@ int main(){
 
     Set<Data<Pikachu>> demoSet3;
     for(int i = 1; i <= 100; i++){
-        int val = rand()%25+1;//i%(rand()%11+1)*100;
+        int val = rand()%15+1;//i%(rand()%11+1)*100;
         Pikachu pk(val);
         Data<Pikachu> pikaData(pk);
         demoSet3.Insert(pikaData);

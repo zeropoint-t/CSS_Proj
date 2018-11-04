@@ -2,9 +2,7 @@
 
 template<class T>
 Data<T>::Data(T d){
-    
     this->data = d;
-    // cout << "Data object created at " << this << endl;
 }
 
 template<class T>

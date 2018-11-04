@@ -8,6 +8,7 @@ class Data{
         Data(const Data& d);
         ~Data();
         T getData() const;
+        //[2 Points] == overload
         bool operator==(const Data<T>& data);
         bool operator>(const Data<T>& data);
         bool operator<(const Data<T>& data);
