@@ -12,7 +12,7 @@ class Set
 {
 public:
     Set();
-    void Add(T& d);
+    void Insert(T& d);
     //[1 Point] A way to obtain the counter for a given key
     int GetCounter(T& d);
     void PrintAll() const;

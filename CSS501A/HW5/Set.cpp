@@ -12,8 +12,14 @@ bool operator<(const T &d1, const T &d2){
 template<class T>
 Set<T>::Set(){}
 
+/*
+Adds an element to a set
+Big O Analysis:
+find & insert methods of map operate at O(log n) with red black tree implementation
+Therefore, this function also performs at O(log n) time complexity
+*/
 template<class T>
-void Set<T>::Add(T& d){
+void Set<T>::Insert(T& d){
     if(this->m.find(d) == m.end()){
         //new in map, start increment from 1
         this->m[d] = 1;
@@ -40,6 +46,10 @@ void Set<T>::PrintAll() const{
 }
 /*
 Print top n items ordered by access count in descending order
+Big-O analysis:
+The first iteration happens n times over the private member map m.
+Inside the linear loop, insert into multimap takes place. Assuming the implementatin of multise uses red-black tree, insert operation is O(log n)
+Therefore, the time complexity of this function is O(n log n)
 */
 template<class T>
 void Set<T>::PrintTopN(int top) const{
