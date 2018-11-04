@@ -13,9 +13,14 @@ class Set
 public:
     Set();
     void Add(T& d);
-    void PrintItems() const;
+    //[1 Point] A way to obtain the counter for a given key
+    int GetCounter(T& d);
+    void PrintAll() const;
+    void PrintTopN(int top) const;
 private:
-    map<T,int> data;
+    //T is key, and value is used as a counter which keeps track of 
+    //the number of times the same key was attempted to be added
+    map<T,int> m;
 };
 
 #include "Set.cpp"

@@ -2,19 +2,20 @@
 
 template<class T>
 Data<T>::Data(T d){
+    
     this->data = d;
-    cout << "Data object created at " << this << endl;
+    // cout << "Data object created at " << this << endl;
 }
 
 template<class T>
 Data<T>::Data(const Data& d){
     this->data = d.getData();
-    cout << "Data object copied at " << this << endl;
+    // cout << "Data object copied at " << this << endl;
 }
 
 template<class T>
 Data<T>::~Data<T>(){
-    cout << "Data object destroyed at " << this << endl;
+    // cout << "Data object destroyed at " << this << endl;
 }
 
 template<class T>
