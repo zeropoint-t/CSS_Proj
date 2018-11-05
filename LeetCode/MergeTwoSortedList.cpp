@@ -74,7 +74,30 @@ void print(LinkedList& list){
     }
 }
 
+// class Plainbox{
+//     public:
+//         virtual void getItems(){
+//             cout << "PlainBix" << endl;
+//         }
+// };
+
+// class Magicbox: public Plainbox{
+//     public:
+//         void getItems() override{
+//             cout << "MagicBox" << endl;
+//         }
+// };
+
+// void GetItems(Plainbox& box){
+//     box.getItems();
+// }
+
 int main(){
+    // Plainbox pb;
+    // Magicbox mb;
+    // GetItems(pb);
+    // GetItems(mb);
+
     LinkedList list1;
     list1.Push_Back(4);
     list1.Push_Back(5);
