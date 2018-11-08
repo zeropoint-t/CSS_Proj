@@ -22,6 +22,23 @@
         "tuple": "cpp",
         "utility": "cpp",
         "string": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "__string": "cpp",
+        "__bit_reference": "cpp",
+        "__functional_03": "cpp",
+        "__mutex_base": "cpp",
+        "hash_map": "cpp",
+        "functional": "cpp",
+        "ios": "cpp",
+        "istream": "cpp",
+        "memory": "cpp",
+        "ostream": "cpp",
+        "sstream": "cpp",
+        "streambuf": "cpp",
+        "string_view": "cpp",
+        "iosfwd": "cpp",
+        "map": "cpp"
     }
 }

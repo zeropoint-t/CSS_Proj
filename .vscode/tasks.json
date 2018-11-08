@@ -6,7 +6,7 @@
         {
             "label": "build",
             "type": "shell",
-            "command": "g++ -g -std=c++11 ${workspaceFolder}/CSS501A/InClassExercise/LinkObject/main.cpp -o ${workspaceFolder}/CSS501A/InClassExercise/LinkObject/main",
+            "command": "g++ -g -std=c++11 ${workspaceFolder}/LeetCode/ImplementStackUsingQueue.cpp -o ${workspaceFolder}/LeetCode/ImplementStackUsingQueue",
             "group":{
                 "kind": "build",
                 "isDefault": true
