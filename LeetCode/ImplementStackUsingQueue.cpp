@@ -75,6 +75,21 @@ class Queue{
 
 };
 
+class Stack : protected Queue{
+    public:
+        void Push(int data){
+            Enqueue(data);
+        }
+        int Pop(){
+            Node* tmp = head;
+            head = head->getNext();
+            int data = tmp->getData();
+            delete tmp;
+            return data;
+        }
+    private:
+};
+
 int main(){
     Queue q;
     q.Enqueue(1);
@@ -88,16 +103,17 @@ int main(){
     cout << q.Dequeue() << endl;
     cout << q.Dequeue() << endl;
 
-    q.Enqueue(1);
-    q.Enqueue(2);
-    q.Enqueue(3);
-    q.Enqueue(4);
-    q.Enqueue(5);
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
+    Stack s;
+    s.Push(1);
+    s.Push(2);
+    s.Push(3);
+    s.Push(4);
+    s.Push(5);
+    cout << s.Pop() << endl;
+    cout << s.Pop() << endl;
+    cout << s.Pop() << endl;
+    cout << s.Pop() << endl;
+    cout << s.Pop() << endl;
 
-    cout << q.Dequeue() << endl;
+    // cout << q.Dequeue() << endl;
 }
