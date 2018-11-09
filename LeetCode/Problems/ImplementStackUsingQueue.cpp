@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 using namespace std;
 
 class Node{
@@ -90,30 +91,82 @@ class Stack : protected Queue{
     private:
 };
 
+template<typename T>
+class NewStack{
+    public:
+        void push(T t){
+            q.push(t);
+        }
+        T pop(){
+            //iterate until the last in is at the end of queue
+            for(int i = 0; i < q.size()-1; i++){
+                q.push(q.front());
+                q.pop();
+            }
+            T t = q.front();
+            q.pop();
+            return t;
+        }
+    private:
+        queue<T> q;
+};
+
 int main(){
-    Queue q;
-    q.Enqueue(1);
-    q.Enqueue(2);
-    q.Enqueue(3);
-    q.Enqueue(4);
-    q.Enqueue(5);
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
-    cout << q.Dequeue() << endl;
 
-    Stack s;
-    s.Push(1);
-    s.Push(2);
-    s.Push(3);
-    s.Push(4);
-    s.Push(5);
-    cout << s.Pop() << endl;
-    cout << s.Pop() << endl;
-    cout << s.Pop() << endl;
-    cout << s.Pop() << endl;
-    cout << s.Pop() << endl;
+    NewStack<int> ns;
+    ns.push(1);
+    ns.push(2);
+    ns.push(3);
+    ns.push(4);
+    ns.push(5);
+    ns.push(6);
 
+    cout << ns.pop() << endl;
+    cout << ns.pop() << endl;
+    cout << ns.pop() << endl;
+    cout << ns.pop() << endl;
+    cout << ns.pop() << endl;
+    cout << ns.pop() << endl;
+
+    cout << endl;
+
+    queue<int> q;
+    q.push(1);
+    q.push(2);
+    q.push(3);
+    q.push(4);
+    q.push(5);
+    q.push(6);
+    cout << q.front() << endl; q.pop();
+    cout << q.front() << endl; q.pop();
+    cout << q.front() << endl; q.pop();
+    cout << q.front() << endl; q.pop();
+    cout << q.front() << endl; q.pop();
+    cout << q.front() << endl; q.pop();
+
+    // //using inheritance to create a stack using a queue//very interesting approach
+    // Queue q;
+    // q.Enqueue(1);
+    // q.Enqueue(2);
+    // q.Enqueue(3);
+    // q.Enqueue(4);
+    // q.Enqueue(5);
     // cout << q.Dequeue() << endl;
+    // cout << q.Dequeue() << endl;
+    // cout << q.Dequeue() << endl;
+    // cout << q.Dequeue() << endl;
+    // cout << q.Dequeue() << endl;
+
+    // Stack s;
+    // s.Push(1);
+    // s.Push(2);
+    // s.Push(3);
+    // s.Push(4);
+    // s.Push(5);
+    // cout << s.Pop() << endl;
+    // cout << s.Pop() << endl;
+    // cout << s.Pop() << endl;
+    // cout << s.Pop() << endl;
+    // cout << s.Pop() << endl;
+
 }

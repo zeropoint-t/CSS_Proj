@@ -20,6 +20,7 @@
 #include <string>
 #include <iostream>
 #include <set>
+#include <unordered_map>
 using namespace std;
 
 int LongestSubstringWithoutRepeatingChars1(string str){
@@ -36,6 +37,10 @@ int LongestSubstringWithoutRepeatingChars1(string str){
                 cnt++;
                 if(cnt > max)
                     max = cnt;
+
+                // if(max == 12)
+                //     int a = 0;
+
             }else{
                 break;
             }
@@ -46,32 +51,37 @@ int LongestSubstringWithoutRepeatingChars1(string str){
     return max;
 }
 
-// int LongestSubstringWithoutRepeatingChars2(string str){
-//     set<char> s;
-//     int max = 0;
-//     int cnt = 0;
+int LongestSubstringWithoutRepeatingChars2(string str){
+    
+    int max = 0;
+    int trainlingMax = 0;
+    unordered_map<char,int> m;
+    for(int i = 0; i < str.length(); i++){
+        // cout << str[i] << endl;
+        auto pair = m.find(str[i]);
+        if(pair == m.end()){//not in the map
+            m.insert({str[i],i});
+            trainlingMax++;
+            if(trainlingMax > max){
+                max = trainlingMax;
+            }
+        }else{//in the map already
+            // cout << pair->second << endl;
+            trainlingMax = i-pair->second > trainlingMax+1 ? trainlingMax+1 : i-pair->second;
+            if(trainlingMax > max){
+                max = trainlingMax;
+            }
+            pair->second = i;
+        }
+    }
 
-//     for(int j = 0; j < str.length(); j++){
-//         // if(str.length()-j <= max)
-//         //     break;
-//         if(s.find(str[j]) == s.end()){
-//             s.insert(str[j]);
-//             cnt++;
-//             if(cnt > max)
-//                 max = cnt;
-//         }else{
-//             s.clear();
-//             cnt = 1;
-//             s.insert(str[j]);
-//         }
-//     }
-//     return max;
-// }
+    return max;
+}
 
 int main(){
-    int max1 = LongestSubstringWithoutRepeatingChars1("ajshvlasdouifhas");
+    int max1 = LongestSubstringWithoutRepeatingChars1("");
     cout << max1 << endl;
 
-    // int max2 = LongestSubstringWithoutRepeatingChars2("ajshvlasdouifhas");
-    // cout << max2 << endl;
+    int max2 = LongestSubstringWithoutRepeatingChars2("");
+    cout << max2 << endl;
 }
