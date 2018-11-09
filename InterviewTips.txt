@@ -1,0 +1,3 @@
+1. Interviewers are lazy. Aks yes or no question. For example, can I assume Queue has tail.
+2. Coding interviews has a minimum bar of being able to solve the problem first.
+3. OO questions are also important.
