@@ -2,7 +2,6 @@
 #ifndef DataManagerInterface_h
 #define DataManagerInterface_h
 
-#include <list>
 #include "DataObserverInterface.h"
 
 // The Abstract Subject
@@ -14,8 +13,8 @@ public:
     virtual void removeObserver(DataObserverInterface<T>* ob) = 0;
     virtual void notifyObserver() = 0;
 
-private:
-    list<DataObserverInterface<T>* > m_obs;
+    virtual void operator+=(DataObserverInterface<T>* ob) = 0;
+    virtual void operator-=(DataObserverInterface<T>* ob) = 0;
 };
 
 #endif
