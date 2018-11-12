@@ -20,6 +20,8 @@ public:
 
     void notifyObserver();
 
+    typename list<DataObserverInterface<T>* >::iterator begin();
+    typename list<DataObserverInterface<T>* >::iterator end();
 private:
     DataPacket<T> data;
     list<DataObserverInterface<T>* > m_obs;

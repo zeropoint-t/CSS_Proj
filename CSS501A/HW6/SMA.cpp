@@ -2,12 +2,13 @@
 
 //copy constructor
 template<class T>
-SMA<T>::SMA(const SMA<T>& sma){
+SMA<T>::SMA(const SMA<T>& sma):DataObserverInterface<T>("SMA Observer"){
     setPeriod(sma.period);
+    values = new DataPacket<T>*[this->period]{ nullptr };
 }
 
 template<class T>
-SMA<T>::SMA(int32_t p){
+SMA<T>::SMA(int32_t p):DataObserverInterface<T>("SMA Observer"){
     setPeriod(p);
     values = new DataPacket<T>*[this->period]{ nullptr };
 }
@@ -21,7 +22,6 @@ SMA<T>::~SMA(){
     delete[] values;
 }
 
-
 template<class T>
 int32_t SMA<T>::getPeriod(){
     return this->period;
@@ -33,7 +33,19 @@ void SMA<T>::setPeriod(int32_t p){
         throw std::out_of_range("SMA: period out of range exception");
     }
 
+    //release all memory allocations
+    if(values != nullptr){
+        for(int i = 0; i < this->period; i++){
+            if(values[i] != nullptr)
+                delete values[i];
+        }
+        delete[] values;
+    }
+
+    //set period to new value
     this->period = p;
+    //reallocate memory
+    values = new DataPacket<T>*[this->period]{ nullptr };
 }
 
 template<class T>
@@ -62,4 +74,9 @@ void SMA<T>::calculate(){
     }
     this->value = total / this->period;
     cout << "SMA: " << this->value << endl;
+}
+
+template<class T>
+void SMA<T>::ShowEMAValue(EMA<T>& ema) const{
+    cout << "I am a friend of EMA and I know his current value is " << ema.value << endl;
 }

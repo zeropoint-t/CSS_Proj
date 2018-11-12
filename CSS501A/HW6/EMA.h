@@ -5,6 +5,7 @@
 #include "DataObserverInterface.h"
 #include "DataPacket.h"
 #include "Error.h"
+#include "SMA.h"
 #include <iostream>
 
 using namespace std;
@@ -20,7 +21,7 @@ public:
     void update(DataPacket<T>& dp) override;
     int32_t getPeriod();
     void setPeriod(int32_t p);
-    
+    template<typename U> friend class SMA;
 protected:
     T value;
 

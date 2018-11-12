@@ -1,12 +1,12 @@
 #include "EMA.h"
 
 template<class T>
-EMA<T>::EMA(const EMA<T>& ema){
+EMA<T>::EMA(const EMA<T>& ema):DataObserverInterface<T>("EMA Observer"){
     setPeriod(ema.period);
 }
 
 template<class T>
-EMA<T>::EMA(int32_t p){
+EMA<T>::EMA(int32_t p):DataObserverInterface<T>("EMA Observer"){
     setPeriod(p);
 }
 

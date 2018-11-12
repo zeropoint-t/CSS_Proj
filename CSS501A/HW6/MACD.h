@@ -16,11 +16,11 @@ template<class T>
 class MACD: public virtual DataObserverInterface<T>, public virtual SMA<T>, public virtual EMA<T>
 {
 public:
+    MACD(const MACD<T>& macd);
     MACD(int32_t p1, int32_t p2);
     ~MACD();
     void update(DataPacket<T>& dp) override;
-    int32_t getPeriod();
-    void setPeriod(int32_t);
+    void setPeriod(int32_t p1, int32_t p2);
     
 private:
     void add(DataPacket<T>& dp);

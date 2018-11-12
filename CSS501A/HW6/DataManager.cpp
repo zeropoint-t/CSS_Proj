@@ -27,6 +27,16 @@ void DataManager<T>::operator-=(DataObserverInterface<T>* ob){
 }
 
 template<class T>
+typename list<DataObserverInterface<T>* >::iterator DataManager<T>::begin(){
+    return this->m_obs.begin();
+}
+
+template<class T>
+typename list<DataObserverInterface<T>* >::iterator DataManager<T>::end(){
+    return this->m_obs.end();
+}
+
+template<class T>
 void DataManager<T>::notifyObserver(){
     auto pos = this->m_obs.begin();
     while(pos != this->m_obs.end()){

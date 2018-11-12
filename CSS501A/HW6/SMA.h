@@ -5,6 +5,7 @@
 #include "DataObserverInterface.h"
 #include "DataPacket.h"
 #include "Error.h"
+#include "EMA.h"
 #include <iostream>
 
 using namespace std;
@@ -20,12 +21,13 @@ public:
     void update(DataPacket<T>& dp) override;
     int32_t getPeriod();
     void setPeriod(int32_t p);
+    void ShowEMAValue(EMA<T>& ema) const;
 
 protected:
     T value;
 
 private:
-    DataPacket<T>** values;
+    DataPacket<T>** values = nullptr;
     void calculate();
     void add(DataPacket<T>& dp);
     int32_t period = 0;
