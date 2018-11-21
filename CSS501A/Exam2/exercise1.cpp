@@ -17,6 +17,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <queue>
 #include <stack>
 #include <algorithm>
 
@@ -83,9 +84,10 @@ class LinkedStructure{
         virtual Node<T>* search(T value) = 0;
 
         virtual void print(Node<T>* n = nullptr){
-            if(n == nullptr)
+            if(n == nullptr){
                 n = this->root;
-
+                cout << n->getData() << endl;
+            }
             for(auto it = n->begin(); it != n->end(); it++){
                 cout << (*it)->getData() << endl;
                 print(*it);
@@ -108,18 +110,18 @@ class LinkedStructure{
 };
 
 template<class T>
-class DerivedLinkedStructure1: public LinkedStructure<T>{
+class RecursiveLinkedStructure: public LinkedStructure<T>{
     public:
-        DerivedLinkedStructure1(T d):LinkedStructure<T>(d){
+        RecursiveLinkedStructure(T d):LinkedStructure<T>(d){
             Node<T>* rt = new Node<T>(d);
             this->root = rt;
         }
 
-        DerivedLinkedStructure1(Node<T>* n):LinkedStructure<T>(n){
+        RecursiveLinkedStructure(Node<T>* n):LinkedStructure<T>(n){
             this->root = n;
         }
 
-        DerivedLinkedStructure1(const LinkedStructure<T>& ls):LinkedStructure<T>(ls){
+        RecursiveLinkedStructure(const LinkedStructure<T>& ls):LinkedStructure<T>(ls){
         }
 
         virtual Node<T>* search(T value) override{
@@ -128,6 +130,7 @@ class DerivedLinkedStructure1: public LinkedStructure<T>{
                 
             return search(this->root, value);
         }
+
     private:
         //search using recursive
         Node<T>* search(Node<T>* n, T value){
@@ -143,57 +146,45 @@ class DerivedLinkedStructure1: public LinkedStructure<T>{
 };
 
 template<class T>
-class DerivedLinkedStructure2: public LinkedStructure<T>{
+class IterativeLinkedStructure: public LinkedStructure<T>{
     public:
-        DerivedLinkedStructure2(T d):LinkedStructure<T>(d){
+        IterativeLinkedStructure(T d):LinkedStructure<T>(d){
             Node<T>* rt = new Node<T>(d);
             this->root = rt;
         }
 
-        DerivedLinkedStructure2(Node<T>* n):LinkedStructure<T>(n){
+        IterativeLinkedStructure(Node<T>* n):LinkedStructure<T>(n){
             this->root = n;
         }
 
-        DerivedLinkedStructure2(const LinkedStructure<T>& ls):LinkedStructure<T>(ls){
+        IterativeLinkedStructure(const LinkedStructure<T>& ls):LinkedStructure<T>(ls){
         }
 
         virtual Node<T>* search(T value) override{
-            if(this->root->getData() == value)
-                return this->root;
-                
-            return search(this->root, value);
+            
+            return nullptr;
+        }
+
+        void print(Node<T>* n = nullptr) override {
+            if(n == nullptr)
+                n = this->root;
+
+            if(n == nullptr)
+                return;
+
+            queue<Node<T>*> q;
+            q.push(n);
+            while(!q.empty()){
+                Node<T>* front = q.front();
+                q.pop();
+                for(auto it = front->begin(); it != front->end(); it++){
+                    q.push(*it);
+                }
+                cout << front->getData() << endl;
+            }
         }
     private:
 
-        //search using recursive
-        Node<T>* search(Node<T>* n, T value){
-            stack<Node<T>*> s;
-            Node<T>* cur = n;
-
-            if(cur->getData() == value)
-                return cur;
-
-            auto it = cur->begin();
-            while (it != cur->end() || s.empty() == false){
-
-                while(cur != nullptr){
-
-                    s.push(*it);
-                    cur = *it;
-                    if(cur->getData() == value)
-                        return cur;
-                    cur = *(cur->begin());
-
-                }
-
-                cur = s.top();
-                s.pop();
-
-                // cur = 
-            }
-
-            return nullptr;
-        }
 };
 
 bool myfunction (int i,int j) { return (i<j); }
@@ -224,59 +215,59 @@ ostream& operator<<(ostream& os, const CustomClass& dt)
 }  
 
 int main(){
-    vector<CustomClass> vi (10);
-    for(auto it = vi.begin(); it != vi.end(); it++){
-        cout << *it << " ";
-    }
+    // vector<CustomClass> vi (10);
+    // for(auto it = vi.begin(); it != vi.end(); it++){
+    //     cout << *it << " ";
+    // }
     // CustomClass& ccs= vi[2];
     // cout << ccs << endl;
     // cout << vi.pop_back() << endl;
 
 
-    CustomClass cc1(23);
-    CustomClass cc2(15);
-    CustomClass cc3(12);
-    CustomClass cc4(63);
-    CustomClass cc5(28);
-    CustomClass myCC[] = {cc1,cc2,cc3,cc4,cc5};
-    std::vector<CustomClass> myccvector (myCC, myCC+5); 
-    std::sort(myccvector.begin(), myccvector.end());
-    for(auto it = myccvector.begin(); it != myccvector.end(); it++){
-        cout << *it << " ";
-    }
-    cout << endl;
+    // CustomClass cc1(23);
+    // CustomClass cc2(15);
+    // CustomClass cc3(12);
+    // CustomClass cc4(63);
+    // CustomClass cc5(28);
+    // CustomClass myCC[] = {cc1,cc2,cc3,cc4,cc5};
+    // std::vector<CustomClass> myccvector (myCC, myCC+5); 
+    // std::sort(myccvector.begin(), myccvector.end());
+    // for(auto it = myccvector.begin(); it != myccvector.end(); it++){
+    //     cout << *it << " ";
+    // }
+    // cout << endl;
 
-    int myints[] = {32,71,12,45,26,80,53,33};
-    std::vector<int> myvector (myints, myints+8);               // 32 71 12 45 26 80 53 33
-    cout << myints << endl;
-    cout << myints + 8 << endl;
+    // int myints[] = {32,71,12,45,26,80,53,33};
+    // std::vector<int> myvector (myints, myints+8);               // 32 71 12 45 26 80 53 33
+    // cout << myints << endl;
+    // cout << myints + 8 << endl;
 
-    // using default comparison (operator <):
-    std::sort (myvector.begin(), myvector.begin()+4);           //(12 32 45 71)26 80 53 33
-    for(auto it = myvector.begin(); it != myvector.end(); it++){
-        cout << *it << " ";
-    }
-    cout << endl;
+    // // using default comparison (operator <):
+    // std::sort (myvector.begin(), myvector.begin()+4);           //(12 32 45 71)26 80 53 33
+    // for(auto it = myvector.begin(); it != myvector.end(); it++){
+    //     cout << *it << " ";
+    // }
+    // cout << endl;
 
-    // using function as comp
-    std::sort (myvector.begin()+4, myvector.end(), myfunction); // 12 32 45 71(26 33 53 80)
-    for(auto it = myvector.begin(); it != myvector.end(); it++){
-        cout << *it << " ";
-    }
-    cout << endl;
+    // // using function as comp
+    // std::sort (myvector.begin()+4, myvector.end(), myfunction); // 12 32 45 71(26 33 53 80)
+    // for(auto it = myvector.begin(); it != myvector.end(); it++){
+    //     cout << *it << " ";
+    // }
+    // cout << endl;
 
-    // using object as comp
-    std::sort (myvector.begin(), myvector.end(), myobject);     //(12 26 32 33 45 53 71 80)
-    for(auto it = myvector.begin(); it != myvector.end(); it++){
-        cout << *it << " ";
-    }
-    cout << endl;
+    // // using object as comp
+    // std::sort (myvector.begin(), myvector.end(), myobject);     //(12 26 32 33 45 53 71 80)
+    // for(auto it = myvector.begin(); it != myvector.end(); it++){
+    //     cout << *it << " ";
+    // }
+    // cout << endl;
 
-    // print out content:
-    std::cout << "myvector contains:";
-    for (std::vector<int>::iterator it=myvector.begin(); it!=myvector.end(); ++it)
-    std::cout << ' ' << *it;
-    std::cout << '\n';
+    // // print out content:
+    // std::cout << "myvector contains:";
+    // for (std::vector<int>::iterator it=myvector.begin(); it!=myvector.end(); ++it)
+    // std::cout << ' ' << *it;
+    // std::cout << '\n';
 
 
 
@@ -290,6 +281,8 @@ int main(){
     Node<int>* n7 = new Node<int>(80);
     Node<int>* n8 = new Node<int>(90);
     Node<int>* n9 = new Node<int>(100);
+    Node<int>* n10 = new Node<int>(110);
+    Node<int>* n11 = new Node<int>(120);
     n.Add(n1);
     n.Add(n2);
     n.Add(n3);
@@ -299,8 +292,13 @@ int main(){
     n2->Add(n7); 
     n3->Add(n8);
     n3->Add(n9); 
+    n9->Add(n10); 
+    n9->Add(n11); 
 
-    DerivedLinkedStructure1<int> dls1(&n);
+
+    cout << endl;
+
+    RecursiveLinkedStructure<int> dls1(&n);
     dls1.print();
     Node<int>* srch = dls1.search(100);
     if(srch != nullptr)
@@ -308,9 +306,9 @@ int main(){
     else
         cout << "Value not found" << endl;
 
-    
+    cout << endl;   
 
-    DerivedLinkedStructure2<int> dls2(&n);
+    IterativeLinkedStructure<int> dls2(&n);
     dls2.print();
     srch = dls2.search(100);
     if(srch != nullptr)
