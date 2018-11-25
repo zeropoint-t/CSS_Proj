@@ -295,7 +295,6 @@ int main(){
     n9->Add(n10); 
     n9->Add(n11); 
 
-
     cout << endl;
 
     RecursiveLinkedStructure<int> dls1(&n);
