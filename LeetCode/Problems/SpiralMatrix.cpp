@@ -29,10 +29,13 @@
 using namespace std;
 
 vector<int> spiralOrder(vector<vector<int>>& matrix) {
+
     int row_max = matrix.size()-1;
     int row_min = 1;
     int col_max = matrix[0].size()-1;
     int col_min = 0;
+    
+    //use this to break out of while loop if all elements were visited
     int elementCnt =  matrix.size() * matrix[0].size();
     vector<int> spiral;
     while(col_max >= col_min || row_max >= row_min){
