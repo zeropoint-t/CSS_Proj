@@ -27,7 +27,7 @@ using namespace std;
 string simplifyPath(string path) {
     stack<char> s;
     for(auto it = path.begin(); it != path.end(); it++){
-        cout << *it << endl;
+        // cout << *it << endl;
 
         if(s.empty()) {
             s.push(*it);
@@ -35,18 +35,21 @@ string simplifyPath(string path) {
             //do nothing
         }else if(s.top() == '.' && *it == '.'){
             //pop until the first alphabet
-            while(!s.empty() && isalpha(s.top()) == false)
+            while(!s.empty() && !isalpha(s.top()))
                 s.pop();
+
             //then pop until the first non alphabet
-            while(!s.empty() && isalpha(s.top()) == true)
+            while(!s.empty() && isalpha(s.top()))
                 s.pop();
+
             //pop until the first alphabet
-            while(!s.empty() && isalpha(s.top()) == false)
+            while(!s.empty() && !isalpha(s.top()))
                 s.pop();
+
             s.push('/');
         }
         else if(s.top() == '.' && *it == '/'){
-            while(!s.empty() && isalpha(s.top()) == false)
+            while(!s.empty() && !isalpha(s.top()))
                 s.pop();
             s.push('/');
         }else{
@@ -55,8 +58,12 @@ string simplifyPath(string path) {
     }
 
     //remove last back slash
-    while(s.top() == '/')
+    while(!s.empty() && s.top() == '/')
         s.pop();
+
+    //remove last back slash
+    while(s.empty())
+        s.push('/');
 
     string str;
     stack<char> ss;
@@ -73,7 +80,7 @@ string simplifyPath(string path) {
 }
 
 int main(){
-    string path = "/a//../b////c/d//././/..";
+    string path = "/a/../../b/../c//.//";
     string simpPath = simplifyPath(path);
     cout << simpPath << endl;
 }
