@@ -11,6 +11,7 @@ using namespace std;
 template<class T>
 class BinaryTree{
     private:
+        void add(shared_ptr<BinaryNode<T>> ptr, const T& data);
         void preorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const;
         void inorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const;
         void postorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const;
@@ -25,6 +26,7 @@ class BinaryTree{
         ~BinaryTree();
 
         void add(const T& data);
+        void clear();
         void preorderTraversal(void visit(T&)) const;
         void inorderTraversal(void visit(T&)) const;
         void postorderTraversal(void visit(T&)) const;
@@ -56,7 +58,52 @@ template<class T>
 BinaryTree<T>::~BinaryTree(){}
 
 template<class T>
-void add(const T& data){
+void BinaryTree<T>::add(const T& data){
+    if(this->root == nullptr){
+        this->root = make_shared<BinaryNode<T>>(data);;
+        return;
+    }
+
+    if(data < this->root->getItem()){
+        if(this->root->getLeftChildPtr() == nullptr){
+            auto newNode = make_shared<BinaryNode<T>>(data);
+            this->root->setLeftChildPtr(newNode);
+        }else{
+            add(this->root->getLeftChildPtr(), data);
+        }
+    }else{
+        if(this->root->getRightChildPtr() == nullptr){
+            auto newNode = make_shared<BinaryNode<T>>(data);
+            this->root->setRightChildPtr(newNode);
+        }else{
+            add(this->root->getRightChildPtr(), data);
+        }
+    }
+}
+
+template<class T>
+void BinaryTree<T>::add(shared_ptr<BinaryNode<T>> ptr, const T& data){
+    if(ptr == nullptr){
+        ptr = make_shared<BinaryNode<T>>(data);
+    }else if(data < ptr->getItem()){
+        if(ptr->getLeftChildPtr() == nullptr){
+            auto newNode = make_shared<BinaryNode<T>>(data);
+            ptr->setLeftChildPtr(newNode);
+        }else{
+            add(ptr->getLeftChildPtr(), data);
+        }
+    }else{
+        if(ptr->getRightChildPtr() == nullptr){
+            auto newNode = make_shared<BinaryNode<T>>(data);
+            ptr->setRightChildPtr(newNode);
+        }else{
+            add(ptr->getRightChildPtr(), data);
+        }
+    }
+}
+
+template<class T>
+void BinaryTree<T>::clear(){
 
 }
 
