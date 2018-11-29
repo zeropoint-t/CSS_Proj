@@ -8,148 +8,150 @@
 
 using namespace std;
 
-template<class T>
+template<class K, class V>
 class BinaryTree{
     private:
-        void add(shared_ptr<BinaryNode<T>> ptr, const T& data);
-        void preorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const;
-        void inorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const;
-        void postorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const;
+        void add(shared_ptr<BinaryNode<K,V>> ptr, const K& k, const V& v);
+        void preorderTraversal(shared_ptr<BinaryNode<K,V>> ptr, void visit(K&,V&)) const;
+        void inorderTraversal(shared_ptr<BinaryNode<K,V>> ptr, void visit(K&,V&)) const;
+        void postorderTraversal(shared_ptr<BinaryNode<K,V>> ptr, void visit(K&,V&)) const;
     protected:
-        shared_ptr<BinaryNode<T>> root;
+        shared_ptr<BinaryNode<K,V>> root;
 
     public:
         BinaryTree();
-        BinaryTree(shared_ptr<BinaryNode<T>> rt);
-        BinaryTree(const T& rootItem);
-        BinaryTree(const T& rootItem, shared_ptr<BinaryNode<T>> leftPrt, shared_ptr<BinaryNode<T>> rightPtr);
+        BinaryTree(shared_ptr<BinaryNode<K,V>> rt);
+        BinaryTree(const K& k, const V& v);
+        BinaryTree(const K& k, const V& v, shared_ptr<BinaryNode<K,V>> leftPrt, shared_ptr<BinaryNode<K,V>> rightPtr);
         ~BinaryTree();
 
-        void add(const T& data);
+        void add(const K& k, const V& v);
         void clear();
-        void preorderTraversal(void visit(T&)) const;
-        void inorderTraversal(void visit(T&)) const;
-        void postorderTraversal(void visit(T&)) const;
-        void breadthFirstSearch(void visit(T&)) const;
-        void depthFirstSearch(void visit(T&)) const;
+        void preorderTraversal(void visit(K&,V&)) const;
+        void inorderTraversal(void visit(K&,V&)) const;
+        void postorderTraversal(void visit(K&,V&)) const;
+        void breadthFirstSearch(void visit(K&,V&)) const;
+        void depthFirstSearch(void visit(K&,V&)) const;
 };
 
-template<class T>
-BinaryTree<T>::BinaryTree(){}
+template<class K, class V>
+BinaryTree<K,V>::BinaryTree(){}
 
-template<class T>
-BinaryTree<T>::BinaryTree(shared_ptr<BinaryNode<T>> rt){
+template<class K, class V>
+BinaryTree<K,V>::BinaryTree(shared_ptr<BinaryNode<K,V>> rt){
     this->root = rt;
 }
 
-template<class T>
-BinaryTree<T>::BinaryTree(const T& rootItem){
-    this->root = make_shared<BinaryNode<T>>(rootItem);
+template<class K, class V>
+BinaryTree<K,V>::BinaryTree(const K& k, const V& v){
+    this->root = make_shared<BinaryNode<K,V>>(k,v);
 }
 
-template<class T>
-BinaryTree<T>::BinaryTree(const T& rootItem, shared_ptr<BinaryNode<T>> leftPrt, shared_ptr<BinaryNode<T>> rightPtr){
-    this->root = make_shared<BinaryNode<T>>(rootItem);
+template<class K, class V>
+BinaryTree<K,V>::BinaryTree(const K& k, const V& v, shared_ptr<BinaryNode<K,V>> leftPrt, shared_ptr<BinaryNode<K,V>> rightPtr){
+    this->root = make_shared<BinaryNode<K,V>>(k,v);
     this->root->setLeftChildPtr(leftPrt);
     this->root->setRightChildPtr(rightPtr);
 }
 
-template<class T>
-BinaryTree<T>::~BinaryTree(){}
+template<class K, class V>
+BinaryTree<K,V>::~BinaryTree(){}
 
-template<class T>
-void BinaryTree<T>::add(const T& data){
+template<class K, class V>
+void BinaryTree<K,V>::add(const K& k, const V& v){
     if(this->root == nullptr){
-        this->root = make_shared<BinaryNode<T>>(data);;
+        this->root = make_shared<BinaryNode<K,V>>(k,v);;
         return;
     }
 
-    if(data < this->root->getItem()){
+    if(k < this->root->getKey()){
         if(this->root->getLeftChildPtr() == nullptr){
-            auto newNode = make_shared<BinaryNode<T>>(data);
+            auto newNode = make_shared<BinaryNode<K,V>>(k,v);
             this->root->setLeftChildPtr(newNode);
         }else{
-            add(this->root->getLeftChildPtr(), data);
+            add(this->root->getLeftChildPtr(),k,v);
         }
     }else{
         if(this->root->getRightChildPtr() == nullptr){
-            auto newNode = make_shared<BinaryNode<T>>(data);
+            auto newNode = make_shared<BinaryNode<K,V>>(k,v);
             this->root->setRightChildPtr(newNode);
         }else{
-            add(this->root->getRightChildPtr(), data);
+            add(this->root->getRightChildPtr(),k,v);
         }
     }
 }
 
-template<class T>
-void BinaryTree<T>::add(shared_ptr<BinaryNode<T>> ptr, const T& data){
+template<class K, class V>
+void BinaryTree<K,V>::add(shared_ptr<BinaryNode<K,V>> ptr, const K& k, const V& v){
     if(ptr == nullptr){
-        ptr = make_shared<BinaryNode<T>>(data);
-    }else if(data < ptr->getItem()){
+        ptr = make_shared<BinaryNode<K,V>>(k,v);
+    }else if(k < ptr->getKey()){
         if(ptr->getLeftChildPtr() == nullptr){
-            auto newNode = make_shared<BinaryNode<T>>(data);
+            auto newNode = make_shared<BinaryNode<K,V>>(k,v);
             ptr->setLeftChildPtr(newNode);
         }else{
-            add(ptr->getLeftChildPtr(), data);
+            add(ptr->getLeftChildPtr(),k,v);
         }
     }else{
         if(ptr->getRightChildPtr() == nullptr){
-            auto newNode = make_shared<BinaryNode<T>>(data);
+            auto newNode = make_shared<BinaryNode<K,V>>(k,v);
             ptr->setRightChildPtr(newNode);
         }else{
-            add(ptr->getRightChildPtr(), data);
+            add(ptr->getRightChildPtr(),k,v);
         }
     }
 }
 
-template<class T>
-void BinaryTree<T>::clear(){
+template<class K, class V>
+void BinaryTree<K,V>::clear(){
 
 }
 
-template<class T>
-void BinaryTree<T>::preorderTraversal(void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::preorderTraversal(void visit(K&, V&)) const{
     preorderTraversal(this->root, visit);
 }
 
-template<class T>
-void BinaryTree<T>::preorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::preorderTraversal(shared_ptr<BinaryNode<K,V>> ptr, void visit(K&, V&)) const{
     if(ptr == nullptr)
         return;
 
-    T item = ptr->getItem();
-    visit(item);
+    K k = ptr->getKey();
+    V v = ptr->getValue();
+    visit(k,v);
 
     preorderTraversal(ptr->getLeftChildPtr(),visit);
 
     preorderTraversal(ptr->getRightChildPtr(),visit);
 }
 
-template<class T>
-void BinaryTree<T>::inorderTraversal(void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::inorderTraversal(void visit(K&, V&)) const{
     inorderTraversal(this->root, visit);
 }
 
-template<class T>
-void BinaryTree<T>::inorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::inorderTraversal(shared_ptr<BinaryNode<K,V>> ptr, void visit(K&, V&)) const{
     if(ptr == nullptr)
         return;
 
     inorderTraversal(ptr->getLeftChildPtr(),visit);
 
-    T item = ptr->getItem();
-    visit(item);
+    K k = ptr->getKey();
+    V v = ptr->getValue();
+    visit(k,v);
 
     inorderTraversal(ptr->getRightChildPtr(),visit);
 }
 
-template<class T>
-void BinaryTree<T>::postorderTraversal(void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::postorderTraversal(void visit(K&, V&)) const{
     postorderTraversal(this->root,visit);
 }
 
-template<class T>
-void BinaryTree<T>::postorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::postorderTraversal(shared_ptr<BinaryNode<K,V>> ptr, void visit(K&, V&)) const{
     if(ptr == nullptr)
         return;
 
@@ -157,20 +159,21 @@ void BinaryTree<T>::postorderTraversal(shared_ptr<BinaryNode<T>> ptr, void visit
 
     postorderTraversal(ptr->getRightChildPtr(),visit);
 
-    T item = ptr->getItem();
-    visit(item);
+    K k = ptr->getKey();
+    V v = ptr->getValue();
+    visit(k,v);
 }
 
-template<class T>
-void BinaryTree<T>::breadthFirstSearch(void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::breadthFirstSearch(void visit(K&, V&)) const{
     if(this->root == nullptr)
         return;
 
-    queue<shared_ptr<BinaryNode<T>>> q;
+    queue<shared_ptr<BinaryNode<K,V>>> q;
     q.push(this->root);
 
     while(q.empty() == false){
-        shared_ptr<BinaryNode<T>> ptr = q.front();
+        shared_ptr<BinaryNode<K,V>> ptr = q.front();
         q.pop();
 
         if(ptr->getLeftChildPtr() != nullptr)
@@ -179,21 +182,22 @@ void BinaryTree<T>::breadthFirstSearch(void visit(T&)) const{
         if(ptr->getRightChildPtr() != nullptr)
             q.push(ptr->getRightChildPtr());
 
-        T item = ptr->getItem();
-        visit(item);
+        K k = ptr->getKey();
+        V v = ptr->getValue();
+        visit(k,v);
     }
 }
 
-template<class T>
-void BinaryTree<T>::depthFirstSearch(void visit(T&)) const{
+template<class K, class V>
+void BinaryTree<K,V>::depthFirstSearch(void visit(K&, V&)) const{
     if(this->root == nullptr)
         return;
 
-    stack<shared_ptr<BinaryNode<T>>> s;
+    stack<shared_ptr<BinaryNode<K,V>>> s;
     s.push(this->root);
 
     while(s.empty() == false){
-        shared_ptr<BinaryNode<T>> ptr = s.top();
+        shared_ptr<BinaryNode<K,V>> ptr = s.top();
         s.pop();
 
         if(ptr->getRightChildPtr() != nullptr)
@@ -202,8 +206,9 @@ void BinaryTree<T>::depthFirstSearch(void visit(T&)) const{
         if(ptr->getLeftChildPtr() != nullptr)
             s.push(ptr->getLeftChildPtr());
 
-        T item = ptr->getItem();
-        visit(item);
+        K k = ptr->getKey();
+        V v = ptr->getValue();
+        visit(k,v);
     }
 }
 

@@ -2,42 +2,52 @@
 
 #include "BinaryNode.h"
 
-template<class T>
-BinaryNode<T>::BinaryNode(){}
+template<class K, class V>
+BinaryNode<K,V>::BinaryNode(){}
 
-template<class T>
-BinaryNode<T>::BinaryNode(const T& data):data(data){}
+template<class K, class V>
+BinaryNode<K,V>::BinaryNode(const K& k, const V& v):key(k),value(v){}
 
-template<class T>
-BinaryNode<T>::BinaryNode(const T& data, shared_ptr<BinaryNode<T>> leftPtr, shared_ptr<BinaryNode<T>> rightPtr)
-    :data(data),leftChildPtr(leftPtr),rightChildPtr(rightPtr){}
+template<class K, class V>
+BinaryNode<K,V>::BinaryNode(const K& k, const V& v, shared_ptr<BinaryNode<K,V>> leftPtr, shared_ptr<BinaryNode<K,V>> rightPtr)
+    :key(k),value(v),leftChildPtr(leftPtr),rightChildPtr(rightPtr){}
 
-template<class T>
-void BinaryNode<T>::setItem(const T& data){
-    this->data = data;
+template<class K, class V>
+void BinaryNode<K,V>::setKey(const K& k){
+    this->key = k;
 }
 
-template<class T>
-T BinaryNode<T>::getItem() const{
-    return this->data;
+template<class K, class V>
+void BinaryNode<K,V>::setValue(const V& v){
+    this->value = v;
 }
 
-template<class T>
-shared_ptr<BinaryNode<T>> BinaryNode<T>::getLeftChildPtr() const{
+template<class K, class V>
+K BinaryNode<K,V>::getKey() const{
+    return this->key;
+}
+
+template<class K, class V>
+V BinaryNode<K,V>::getValue() const{
+    return this->value;
+}
+
+template<class K, class V>
+shared_ptr<BinaryNode<K,V>> BinaryNode<K,V>::getLeftChildPtr() const{
     return this->leftChildPtr;
 }
 
-template<class T>
-shared_ptr<BinaryNode<T>> BinaryNode<T>::getRightChildPtr() const{
+template<class K, class V>
+shared_ptr<BinaryNode<K,V>> BinaryNode<K,V>::getRightChildPtr() const{
     return this->rightChildPtr;
 }
 
-template<class T>
-void BinaryNode<T>::setLeftChildPtr(shared_ptr<BinaryNode<T>> leftPtr){
+template<class K, class V>
+void BinaryNode<K,V>::setLeftChildPtr(shared_ptr<BinaryNode<K,V>> leftPtr){
     this->leftChildPtr = leftPtr;
 }
 
-template<class T>
-void BinaryNode<T>::setRightChildPtr(shared_ptr<BinaryNode<T>> rightPtr){
+template<class K, class V>
+void BinaryNode<K,V>::setRightChildPtr(shared_ptr<BinaryNode<K,V>> rightPtr){
     this->rightChildPtr = rightPtr;
 }

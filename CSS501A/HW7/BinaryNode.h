@@ -5,26 +5,29 @@
 
 using namespace std;
 
-template<class T>
+template<class K, class V>
 class BinaryNode{
     private:
-        T data;
-        shared_ptr<BinaryNode<T>> leftChildPtr;
-        shared_ptr<BinaryNode<T>> rightChildPtr;
+        K key;
+        V value;
+        shared_ptr<BinaryNode<K,V>> leftChildPtr;
+        shared_ptr<BinaryNode<K,V>> rightChildPtr;
 
     public:
         BinaryNode();
-        BinaryNode(const T& data);
-        BinaryNode(const T& data, shared_ptr<BinaryNode<T>> leftPtr, shared_ptr<BinaryNode<T>> rightPtr);
+        BinaryNode(const K& k, const V& v);
+        BinaryNode(const K& k, const V& v, shared_ptr<BinaryNode<K,V>> leftPtr, shared_ptr<BinaryNode<K,V>> rightPtr);
 
-        void setItem(const T& data);
-        T getItem() const;
+        void setKey(const K& k);
+        void setValue(const V& v);
+        K getKey() const;
+        V getValue() const;
 
-        shared_ptr<BinaryNode<T>> getLeftChildPtr() const;
-        shared_ptr<BinaryNode<T>> getRightChildPtr() const;
+        shared_ptr<BinaryNode<K,V>> getLeftChildPtr() const;
+        shared_ptr<BinaryNode<K,V>> getRightChildPtr() const;
 
-        void setLeftChildPtr(shared_ptr<BinaryNode<T>> leftPtr);
-        void setRightChildPtr(shared_ptr<BinaryNode<T>> rightPtr);
+        void setLeftChildPtr(shared_ptr<BinaryNode<K,V>> leftPtr);
+        void setRightChildPtr(shared_ptr<BinaryNode<K,V>> rightPtr);
 };
 
 #include "BinaryNode.cpp"

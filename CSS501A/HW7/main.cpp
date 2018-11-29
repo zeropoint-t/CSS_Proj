@@ -1,15 +1,20 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <map>
+#include <queue>
+
 #include "BinaryNode.h"
 #include "BinaryTree.h"
 
 using namespace std;
 
-template<class T>
-void visit(T& item){
-    cout << item << endl;
+template<class K, class V>
+void visit(K& key, V& value){
+    cout << key << endl;
 }
+
+
 
 int main(){
     // shared_ptr<BinaryNode<int>> bn1 = make_shared<BinaryNode<int>>(1);
@@ -20,12 +25,12 @@ int main(){
 
     // BinaryTree<int> bt(bn4);
 
-    BinaryTree<int> bt;
-    bt.add(4);
-    bt.add(2);
-    bt.add(1);
-    bt.add(3);
-    bt.add(5);
+    BinaryTree<int,int> bt;
+    bt.add(4,0);
+    bt.add(2,0);
+    bt.add(1,0);
+    bt.add(3,0);
+    bt.add(5,0);
 
     bt.preorderTraversal(visit);
     cout << endl;
@@ -36,4 +41,23 @@ int main(){
     bt.breadthFirstSearch(visit);
     cout << endl;
     bt.depthFirstSearch(visit);
+
+    string str = "Hi my name is Tetsuya. I am from Japan originally but I have been here a very long time.";
+    map<char,int> frequencyMap;
+    for(auto it = str.begin(); it != str.end(); it++){
+        auto c = frequencyMap.find(*it);
+        if(c != frequencyMap.end()){
+            frequencyMap[*it] += 1;
+        }else{
+            frequencyMap.insert(pair<char,int>(*it,1));
+        }
+    }
+
+    //priority_queue<BinaryNode<
+    for(auto pair : frequencyMap){
+        cout << pair.first << " " << pair.second << endl;
+    }
+
+    char c = 'A';
+    cout << int(c) << endl;
 }
