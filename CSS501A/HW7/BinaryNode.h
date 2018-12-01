@@ -17,6 +17,7 @@ class BinaryNode{
         BinaryNode();
         BinaryNode(const K& k, const V& v);
         BinaryNode(const K& k, const V& v, shared_ptr<BinaryNode<K,V>> leftPtr, shared_ptr<BinaryNode<K,V>> rightPtr);
+        ~BinaryNode();
 
         void setKey(const K& k);
         void setValue(const V& v);
@@ -28,6 +29,8 @@ class BinaryNode{
 
         void setLeftChildPtr(shared_ptr<BinaryNode<K,V>> leftPtr);
         void setRightChildPtr(shared_ptr<BinaryNode<K,V>> rightPtr);
+
+        bool operator<(const BinaryNode<K,V>& bn) const;
 };
 
 #include "BinaryNode.cpp"
