@@ -14,7 +14,7 @@ BinaryNode<K,V>::BinaryNode(const K& k, const V& v, shared_ptr<BinaryNode<K,V>> 
 
 template<class K, class V>
 BinaryNode<K,V>::~BinaryNode(){
-    cout << "Binary Node destroyed " << this->getKey() << " " << this->getValue() <<" at " << this << endl;
+    // cout << "Binary Node destroyed " << this->getKey() << " " << this->getValue() <<" at " << this << endl;
 }
 
 template<class K, class V>
@@ -59,5 +59,7 @@ void BinaryNode<K,V>::setRightChildPtr(shared_ptr<BinaryNode<K,V>> rightPtr){
 
 template<class K, class V>
 bool BinaryNode<K,V>::operator<(const BinaryNode<K,V>& bn) const{
-    return this->value < bn.value;
+    if(this->value == bn.value)
+        return this->key > bn.key;
+    return this->value > bn.value;
 }
