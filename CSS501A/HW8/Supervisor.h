@@ -3,6 +3,8 @@
 #define Supervisor_h
 
 #include <string>
+#include <stdexcept>
+#include <algorithm>
 
 #include "Instructor.h"
 
