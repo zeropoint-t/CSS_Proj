@@ -1,3 +1,11 @@
+
+                // "${workspaceFolder}/CSS501A/HW8/main.cpp", 
+                // "${workspaceFolder}/CSS501A/HW8/Person.cpp", 
+                // "${workspaceFolder}/CSS501A/HW8/Instructor.cpp", 
+                // "${workspaceFolder}/CSS501A/HW8/Student.cpp", 
+                // "${workspaceFolder}/CSS501A/HW8/Supervisor.cpp", 
+                // "${workspaceFolder}/CSS501A/HW8/SkiSchool.cpp", 
+
 #include <iostream>
 #include <string>
 #include <vector>
