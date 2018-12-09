@@ -286,7 +286,7 @@ class SingleElimination_Tournament : public Tournament<T>{
             this->display(this->matches.front(), 1);
         }
 
-        void Enter(T t){
+        void Enter(T t) override{
             if(matchType == 0)//random
                 competitors_random.push(t);
             else
