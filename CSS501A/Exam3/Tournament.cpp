@@ -2,6 +2,7 @@
 #include <string>
 #include <queue>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -111,16 +112,18 @@ class Group{
         }
 };
 
+enum MatchTypeEnum { sorted, rnd };
+
 template<class T>
 class Tournament{
     private:
 
     protected:
         T winner;
-        int matchType = 0;
+        MatchTypeEnum matchType = rnd;
         int roundPlayed = 0;
     public:
-        Tournament(int matchType){
+        Tournament(MatchTypeEnum matchType){
             this->matchType = matchType;
         }
         virtual ~Tournament(){}
@@ -154,6 +157,11 @@ ostream& operator<<(ostream& outstream, SingleElimination_Tournament<T> t){
 }
 
 template<class T>
+bool sortByRank(T& comp1, T& comp2){
+    return comp1 < comp2;
+}
+
+template<class T>
 class SingleElimination_Tournament : public Tournament<T>{
 
     template<class d>
@@ -161,13 +169,9 @@ class SingleElimination_Tournament : public Tournament<T>{
 
     private:
         int numOfGroups = 0;
-        int matchType = 0;
         vector<Group<T>> groups;//keeps track of groups
-
         queue<Match<T>*> matches;//keeps track of matches
-
-        priority_queue<T> competitors_by_skills;//sorted by skill level
-        queue<T> competitors_random;//ordered as entered
+        vector<T> competitors;
 
         void clear(Match<T>* match){
             if(match->Match1 != nullptr)
@@ -198,9 +202,7 @@ class SingleElimination_Tournament : public Tournament<T>{
 
             this->numOfGroups = tournament.numOfGroups;
             this->groups = tournament.groups;
-            this->competitors_by_skills = tournament.competitors_by_skills;
-            this->competitors_random = tournament.competitors_random;
-
+            this->competitors = tournament.competitors;
 
             //perform breadth first search to deep copy matches
             if(tournament.matches.size() > 0){
@@ -236,7 +238,6 @@ class SingleElimination_Tournament : public Tournament<T>{
                     newMatch = new_q.front();
                     new_q.pop();
 
-
                     if(origMatch != nullptr){
                         //create new Match1 & Match2 pointers
                         newMatch->Winner = origMatch->Winner;
@@ -252,19 +253,14 @@ class SingleElimination_Tournament : public Tournament<T>{
                         //push new champion match's match 1 and match2 into a queue for BFS
                         new_q.push(newMatch->Match1);
                         new_q.push(newMatch->Match2);
-
-                        // cout << origMatch->Winner.getName() << endl;
-                        // cout << newMatch->Winner.getName() << endl;  
                     }
                 }
             }
         }
-        SingleElimination_Tournament(int matchType, int numOfGroups):Tournament<T>(matchType){
+
+        SingleElimination_Tournament(MatchTypeEnum matchType, int numOfGroups):Tournament<T>(matchType){
             if(numOfGroups < 1 || numOfGroups > 4)
                 throw runtime_error("Number of groups can not be less 0 or greater than 4!!");
-
-            if(matchType < 0 || matchType > 1)
-                throw runtime_error("matchType has to be 0 or 1!!");  
 
             this->matchType = matchType;
             this->numOfGroups = numOfGroups;
@@ -287,29 +283,35 @@ class SingleElimination_Tournament : public Tournament<T>{
         }
 
         void Enter(T t) override{
-            if(matchType == 0)//random
-                competitors_random.push(t);
-            else
-                competitors_by_skills.push(t);
+            this->competitors.push_back(t);
         }
 
         T& GetWinner() override{
             //*********************************
+            //sort competitors
+            //*********************************
+            if(this->matchType == rnd){
+                for(int i = 0; i < this->competitors.size(); i++){
+                    int rndIndex = rand() % (this->competitors.size()-1); 
+                    auto element = this->competitors.at(rndIndex);
+                    this->competitors.erase(this->competitors.begin() + rndIndex);
+                    this->competitors.push_back(element);
+                }
+            }else if(this->matchType == sorted){
+                sort(this->competitors.begin(), this->competitors.end(), sortByRank<T>);
+            }
+
+            cout << this->competitors.size() << endl;
+
+            //*********************************
             //assign competitors into groups
             //*********************************
-            if(this->matchType == 0){//random selection
-                while(competitors_random.empty() == false){
-                    for(auto g = groups.begin(); g != groups.end(); g++){
-                        g->Add(competitors_random.front());
-                        competitors_random.pop();
-                    }
-                }
-            }else{//by skillset
-                while(competitors_by_skills.empty() == false){
-                    for(auto g = groups.begin(); g != groups.end(); g++){
-                        g->Add(competitors_by_skills.top());
-                        competitors_by_skills.pop();
-                    }
+            for(auto cmp = competitors.begin(); cmp != competitors.end();){
+                for(auto g = groups.begin(); g != groups.end(); g++){
+                    g->Add(*cmp);
+                    cmp++;
+                    if(cmp == this->competitors.end())
+                        break;
                 }
             }
 
@@ -321,26 +323,22 @@ class SingleElimination_Tournament : public Tournament<T>{
                 queue<Match<T>*> groupMatches;
                 while(!g->Empty())
                 {
-                    if(g->GetSize() >= 2){
-                        Match<T>* match1 = new Match<T>;
-                        Match<T>* match2 = new Match<T>;
+                    if(g->GetSize() >= 2){//more than 2 competitors are left
                         Match<T>* curMatch = new Match<T>;
-                        match1->Winner = g->GetNextCompetitor();
-                        match2->Winner = g->GetNextCompetitor();
-                        curMatch->Match1 = match1;
-                        curMatch->Match2 = match2;
+                        curMatch->Match1 = new Match<T>;
+                        curMatch->Match2 = new Match<T>;
+                        curMatch->Match1->Winner = g->GetNextCompetitor();
+                        curMatch->Match2->Winner = g->GetNextCompetitor();
                         curMatch->Winner = curMatch->Match1->Winner * curMatch->Match2->Winner;
                         this->roundPlayed++;
                         groupMatches.push(curMatch);
                     }else{//only 1 competitor left
-                        Match<T>* match1 = new Match<T>;
-                        Match<T>* match2 = new Match<T>;
                         Match<T>* curMatch = new Match<T>;
-                        match1->Winner = g->GetNextCompetitor();
-                        match2->Winner = match1->Winner;
-                        curMatch->Match1 = match1;
-                        curMatch->Match2 = match2;
-                        curMatch->Winner = match1->Winner;
+                        curMatch->Match1 = new Match<T>;
+                        curMatch->Match2 = new Match<T>;
+                        curMatch->Match1->Winner = g->GetNextCompetitor();
+                        curMatch->Match2->Winner = curMatch->Match1->Winner;
+                        curMatch->Winner = curMatch->Match1->Winner;
                         this->roundPlayed++;
                         groupMatches.push(curMatch);
                     }
@@ -406,7 +404,7 @@ class Match{
 
 int main(){
     SingleElimination_Tournament<Competitor>* t = 
-        new SingleElimination_Tournament<Competitor>(0,2);
+        new SingleElimination_Tournament<Competitor>(sorted,2);
 
     for(int i = 0; i < 8; i++){
         string name = "Competitor " + to_string(i);
@@ -415,9 +413,11 @@ int main(){
         t->Enter(c);
     }
 
-    SingleElimination_Tournament<Competitor> copyTournament = *t;
+    cout << *t << endl;
 
-    cout << copyTournament << endl;
+    // SingleElimination_Tournament<Competitor> copyTournament = *t;
+
+    // cout << copyTournament << endl;
 
     delete t;
 }
