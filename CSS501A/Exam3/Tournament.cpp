@@ -6,132 +6,151 @@
 
 using namespace std;
 
-class Competitor{
-    private:
-        string name;
-        int wins = 0;
-        int losses = 0;
-        int skill_level = 0;
-    public:
-        Competitor(){}
-        Competitor(string name){
-            this->name = name;
-        }
+class Competitor {
+private:
+	string name;
+	int wins = 0;
+	int losses = 0;
+	int skill_level = 0;
+public:
+	Competitor() {}
+	Competitor(string name) {
+		this->name = name;
+	}
 
-        void setSkillLevel(int lvl){
-            this->skill_level = lvl;
-        }
+	void setSkillLevel(int lvl) {
+		this->skill_level = lvl;
+	}
 
-        int getSkillLevel() const{
-            return this->skill_level;
-        }
+	int getSkillLevel() const {
+		return this->skill_level;
+	}
 
-        string getName(){
-            return this->name;
-        }
+	string getName() {
+		return this->name;
+	}
 
-        void incrementWin(){wins++;}
+	void incrementWin() { wins++; }
 
-        void incrementLosses(){losses++;}
+	void incrementLosses() { losses++; }
 
-        void setWins(int wins){
-            if(wins > 0 && wins < 100){
-                this->wins = wins;
-            }else{
-                throw out_of_range("Wins are negative or too many wins");
-            }
-        }
+	void setWins(int wins) {
+		if (wins > 0 && wins < 100) {
+			this->wins = wins;
+		}
+		else {
+			throw out_of_range("Wins are negative or too many wins");
+		}
+	}
 
-        void setLosses(int losses){
-            if(losses > 0 && losses < 100){
-                this->losses = losses;
-            }else{
-                throw out_of_range("losses are negative or too many losses");
-            }
-        }
+	void setLosses(int losses) {
+		if (losses > 0 && losses < 100) {
+			this->losses = losses;
+		}
+		else {
+			throw out_of_range("losses are negative or too many losses");
+		}
+	}
 
-        double getWins() const{
-            return wins;
-        }
+	double getWins() const {
+		return wins;
+	}
 
-        double getLosses() const{
-            return losses;
-        }
+	double getLosses() const {
+		return losses;
+	}
 
-        double getWLRatio() const{
-            return losses == 0 ? 0 : wins / losses;
-        }
+	double getWLRatio() const {
+		return losses == 0 ? 0 : wins / losses;
+	}
 
-        Competitor& operator*(Competitor& competitor){
-            // cout << this->name << " at " << this->getSkillLevel() << "  vs  " << competitor.name << " at " << competitor.getSkillLevel() << endl;
-            if(this->getSkillLevel() > competitor.getSkillLevel()){
-                this->wins++;
-                competitor.losses++;
-                // cout << "Winner is " << this->name << endl;
-                return *this;
-            }
-            else{
-                competitor.wins++;
-                this->losses++;
-                // cout << "Winner is " << competitor.name << endl;
-                return competitor;
-            }
-        }
+	Competitor& operator*(Competitor& competitor) {
+		// cout << this->name << " at " << this->getSkillLevel() << "  vs  " << competitor.name << " at " << competitor.getSkillLevel() << endl;
+		if (this->getSkillLevel() > competitor.getSkillLevel()) {
+			this->wins++;
+			competitor.losses++;
+			// cout << "Winner is " << this->name << endl;
+			return *this;
+		}
+		else {
+			competitor.wins++;
+			this->losses++;
+			// cout << "Winner is " << competitor.name << endl;
+			return competitor;
+		}
+	}
 
-        bool operator<(const Competitor& competitor) const{
-            if(this->getSkillLevel() < competitor.getSkillLevel())
-                return true;
-            else
-                return false;
-        }
+	bool operator<(const Competitor& competitor) const {
+		if (this->getSkillLevel() < competitor.getSkillLevel())
+			return true;
+		else
+			return false;
+	}
 };
 
 template<class T>
-class Group{
-    private:
-        queue<T> competitors;
-    public:
-        Group(){}
-        void Add(T t){
-            competitors.push(t);
-        }
-        bool Empty(){
-            return competitors.empty();
-        }
-        int GetSize(){
-            return competitors.size();
-        }
-        T GetNextCompetitor(){
-            if(competitors.empty() == false){
-                T nextCompetitor = competitors.front();
-                competitors.pop();
-                return nextCompetitor;
-            }else{
-                throw runtime_error("There is no more competitors");
-            }
-        }
+class Group {
+private:
+	queue<T> competitors;
+	string groupName;
+public:
+	Group(string name) {
+		setGroupName(name);
+	}
+
+	string getGroupName() const { return this->groupName; }
+
+	void setGroupName(string name) { 
+		if (name.size() == 0)
+			throw runtime_error("Group name cannot be empty");
+
+		if (name.size() > 100)
+			throw runtime_error("Group name is too long");
+
+		this->groupName = name; 
+	}
+
+	void Add(T t) {
+		competitors.push(t);
+	}
+	bool Empty() const {
+		return competitors.empty();
+	}
+	int GetSize() const{
+		return competitors.size();
+	}
+	T GetNextCompetitor() {
+		if (competitors.empty() == false) {
+			T nextCompetitor = competitors.front();
+			competitors.pop();
+			return nextCompetitor;
+		}
+		else {
+			throw runtime_error("There is no more competitors");
+		}
+	}
 };
 
 enum MatchTypeEnum { sorted, rnd };
 
 template<class T>
-class Tournament{
-    private:
+class Tournament {
+private:
 
-    protected:
-        T winner;
-        MatchTypeEnum matchType = rnd;
-        int roundPlayed = 0;
-    public:
-        Tournament(MatchTypeEnum matchType){
-            this->matchType = matchType;
-        }
-        virtual ~Tournament(){}
-        virtual T& GetWinner() = 0;
-        virtual void Enter(T t) = 0;
-        int getRoundsPlayed(){
-            return this->roundPlayed;
-        }
+protected:
+	T winner;
+	MatchTypeEnum matchType = rnd;
+	int roundPlayed = 0;
+public:
+	Tournament(MatchTypeEnum matchType) {
+		this->matchType = matchType;
+	}
+	virtual ~Tournament() {}
+	virtual T& GetWinner() = 0;
+	virtual void Enter(T t) = 0;
+	int getRoundsPlayed() {
+		return this->roundPlayed;
+	}
 };
 
 template<class T>
@@ -141,283 +160,284 @@ template<class T>
 class SingleElimination_Tournament;
 
 template<class T>
-ostream& operator<<(ostream& outstream, SingleElimination_Tournament<T> t){
-    T winner = t.GetWinner();
-    cout << "-----Champion Stats-----" << endl;
-    cout << "The Champion is " << winner.getName() << endl;
-    cout << "Wins: " << winner.getWins() << endl;
-    cout << "Losses: " << winner.getLosses() << endl;
-    cout << "Rounds played: " << t.getRoundsPlayed() << endl;
+ostream& operator<<(ostream& outstream, SingleElimination_Tournament<T> t) {
+	T winner = t.GetWinner();
+	cout << "-----Champion Stats-----" << endl;
+	cout << "The Champion is " << winner.getName() << endl;
+	cout << "Wins: " << winner.getWins() << endl;
+	cout << "Losses: " << winner.getLosses() << endl;
+	cout << "Rounds played: " << t.getRoundsPlayed() << endl;
 
-    cout << endl;
+	cout << endl;
 
-    t.displayRoster();
+	t.displayRoster();
 
-    return outstream;
+	return outstream;
 }
 
 template<class T>
-bool sortByRank(T& comp1, T& comp2){
-    return comp1 < comp2;
+bool sortByRank(T& comp1, T& comp2) {
+	return comp1 < comp2;
 }
 
 template<class T>
-class SingleElimination_Tournament : public Tournament<T>{
+class SingleElimination_Tournament : public Tournament<T> {
 
-    template<class d>
-    friend ostream& operator<<(ostream& outstream, const SingleElimination_Tournament<d> t);
+	template<class d>
+	friend ostream& operator<<(ostream& outstream, const SingleElimination_Tournament<d> t);
 
-    private:
-        int numOfGroups = 0;
-        vector<Group<T>> groups;//keeps track of groups
-        queue<Match<T>*> matches;//keeps track of matches
-        vector<T> competitors;
+private:
+	int numOfGroups = 0;
+	vector<Group<T>> groups;//keeps track of groups
+	queue<Match<T>*> matches;//keeps track of matches
+	vector<T> competitors;
 
-        void clear(Match<T>* match){
-            if(match->Match1 != nullptr)
-                clear(match->Match1);
+	void clear(Match<T>* match) {
+		if (match->Match1 != nullptr)
+			clear(match->Match1);
 
-            if(match->Match2 != nullptr)
-                clear(match->Match2);
+		if (match->Match2 != nullptr)
+			clear(match->Match2);
 
-            delete match;
-        }
+		delete match;
+	}
 
-        void display(Match<T>* match, int&& i) const{
+	void display(Match<T>* match, int&& i) const {
 
-            if(match->Match1 != nullptr)
-                display(match->Match1, move(i));
+		if (match->Match1 != nullptr)
+			display(match->Match1, move(i));
 
-            if(match->Match2 != nullptr)
-                display(match->Match2, move(i));
+		if (match->Match2 != nullptr)
+			display(match->Match2, move(i));
 
-            if(match->Match1 != nullptr){
-                cout << "---Game " << i++ << "---" << endl;
-                cout << match->Match1->Winner.getName() << " vs " << match->Match2->Winner.getName() << endl;
-                cout << "Winner is " << match->Winner.getName() << endl << endl;
-            }
-        }
-    public:
-        SingleElimination_Tournament(const SingleElimination_Tournament& tournament):Tournament<T>(tournament.matchType){
+		if (match->Match1 != nullptr) {
+			cout << "---Game " << i++ << "---" << endl;
+			cout << match->Match1->Winner.getName() << " vs " << match->Match2->Winner.getName() << endl;
+			cout << "Winner is " << match->Winner.getName() << endl << endl;
+		}
+	}
 
-            this->numOfGroups = tournament.numOfGroups;
-            this->groups = tournament.groups;
-            this->competitors = tournament.competitors;
+public:
+	SingleElimination_Tournament(const SingleElimination_Tournament& tournament) :Tournament<T>(tournament.matchType) {
 
-            //perform breadth first search to deep copy matches
-            if(tournament.matches.size() > 0){
-                queue<Match<T>*> orig_q;//keep track of original matches
-                queue<Match<T>*> new_q;//keep track of new matches
+		this->numOfGroups = tournament.numOfGroups;
+		this->groups = tournament.groups;
+		this->competitors = tournament.competitors;
 
-                Match<T>* origMatch = tournament.matches.front();
-                
-                Match<T>* newMatch = new Match<T>;
+		//perform breadth first search to deep copy matches
+		if (tournament.matches.size() > 0) {
+			queue<Match<T>*> orig_q;//keep track of original matches
+			queue<Match<T>*> new_q;//keep track of new matches
 
-                //create new Match1 & Match2 pointers
-                newMatch->Winner = origMatch->Winner;
-                if(origMatch->Match1 != nullptr)
-                    newMatch->Match1 = new Match<T>;
-                if(origMatch->Match2 != nullptr)
-                    newMatch->Match2 = new Match<T>;
+			Match<T>* origMatch = tournament.matches.front();
 
-                //put the champaion match into matches
-                this->matches.push(newMatch);
+			Match<T>* newMatch = new Match<T>;
 
-                //push original champion match's match 1 and match2 into a queue for BFS
-                orig_q.push(origMatch->Match1);
-                orig_q.push(origMatch->Match2);
+			//create new Match1 & Match2 pointers
+			newMatch->Winner = origMatch->Winner;
+			if (origMatch->Match1 != nullptr)
+				newMatch->Match1 = new Match<T>;
+			if (origMatch->Match2 != nullptr)
+				newMatch->Match2 = new Match<T>;
 
-                //push new champion match's match 1 and match2 into a queue for BFS
-                new_q.push(newMatch->Match1);
-                new_q.push(newMatch->Match2);
+			//put the champaion match into matches
+			this->matches.push(newMatch);
 
-                while(!orig_q.empty()){
-                    origMatch = orig_q.front();
-                    orig_q.pop();
+			//push original champion match's match 1 and match2 into a queue for BFS
+			orig_q.push(origMatch->Match1);
+			orig_q.push(origMatch->Match2);
 
-                    newMatch = new_q.front();
-                    new_q.pop();
+			//push new champion match's match 1 and match2 into a queue for BFS
+			new_q.push(newMatch->Match1);
+			new_q.push(newMatch->Match2);
 
-                    if(origMatch != nullptr){
-                        //create new Match1 & Match2 pointers
-                        newMatch->Winner = origMatch->Winner;
-                        if(origMatch->Match1 != nullptr)
-                            newMatch->Match1 = new Match<T>;
-                        if(origMatch->Match2 != nullptr)
-                            newMatch->Match2 = new Match<T>;
+			while (!orig_q.empty()) {
+				origMatch = orig_q.front();
+				orig_q.pop();
 
-                        //push original champion match's match 1 and match2 into a queue for BFS
-                        orig_q.push(origMatch->Match1);
-                        orig_q.push(origMatch->Match2);
+				newMatch = new_q.front();
+				new_q.pop();
 
-                        //push new champion match's match 1 and match2 into a queue for BFS
-                        new_q.push(newMatch->Match1);
-                        new_q.push(newMatch->Match2);
-                    }
-                }
-            }
-        }
+				if (origMatch != nullptr) {
+					//create new Match1 & Match2 pointers
+					newMatch->Winner = origMatch->Winner;
+					if (origMatch->Match1 != nullptr)
+						newMatch->Match1 = new Match<T>;
+					if (origMatch->Match2 != nullptr)
+						newMatch->Match2 = new Match<T>;
 
-        SingleElimination_Tournament(MatchTypeEnum matchType, int numOfGroups):Tournament<T>(matchType){
-            if(numOfGroups < 1 || numOfGroups > 4)
-                throw runtime_error("Number of groups can not be less 0 or greater than 4!!");
+					//push original champion match's match 1 and match2 into a queue for BFS
+					orig_q.push(origMatch->Match1);
+					orig_q.push(origMatch->Match2);
 
-            this->matchType = matchType;
-            this->numOfGroups = numOfGroups;
-            for(int i = 0; i < numOfGroups; i++){
-                Group<T> g;
-                this->groups.push_back(g);
-            }
-        }
+					//push new champion match's match 1 and match2 into a queue for BFS
+					new_q.push(newMatch->Match1);
+					new_q.push(newMatch->Match2);
+				}
+			}
+		}
+	}
 
-        ~SingleElimination_Tournament(){
-            if(!matches.empty() && matches.size() == 1){
-                Match<T>* championship = matches.front();
-                matches.pop();
-                clear(championship);
-            }
-        }
+	SingleElimination_Tournament(MatchTypeEnum matchType, int numOfGroups) :Tournament<T>(matchType) {
+		if (numOfGroups < 1 || numOfGroups > 4)
+			throw runtime_error("Number of groups can not be less 0 or greater than 4!!");
 
-        void displayRoster() const{
-            this->display(this->matches.front(), 1);
-        }
+		this->matchType = matchType;
+		this->numOfGroups = numOfGroups;
+		for (int i = 0; i < numOfGroups; i++) {
+			Group<T> g("Group " + to_string(i + 1));
+			this->groups.push_back(g);
+		}
+	}
 
-        void Enter(T t) override{
-            this->competitors.push_back(t);
-        }
+	~SingleElimination_Tournament() {
+		if (!matches.empty() && matches.size() == 1) {
+			Match<T>* championship = matches.front();
+			matches.pop();
+			clear(championship);
+		}
+	}
 
-        T& GetWinner() override{
-            //*********************************
-            //sort competitors
-            //*********************************
-            if(this->matchType == rnd){
-                for(int i = 0; i < this->competitors.size(); i++){
-                    int rndIndex = rand() % (this->competitors.size()-1); 
-                    auto element = this->competitors.at(rndIndex);
-                    this->competitors.erase(this->competitors.begin() + rndIndex);
-                    this->competitors.push_back(element);
-                }
-            }else if(this->matchType == sorted){
-                sort(this->competitors.begin(), this->competitors.end(), sortByRank<T>);
-            }
+	void displayRoster() const {
+		this->display(this->matches.front(), 1);
+	}
 
-            cout << this->competitors.size() << endl;
+	void Enter(T t) override {
+		this->competitors.push_back(t);
+	}
 
-            //*********************************
-            //assign competitors into groups
-            //*********************************
-            for(auto cmp = competitors.begin(); cmp != competitors.end();){
-                for(auto g = groups.begin(); g != groups.end(); g++){
-                    g->Add(*cmp);
-                    cmp++;
-                    if(cmp == this->competitors.end())
-                        break;
-                }
-            }
+	T& GetWinner() override {
+		//*********************************
+		//sort competitors
+		//*********************************
+		if (this->matchType == rnd) {
+			for (int i = 0; i < this->competitors.size(); i++) {
+				int rndIndex = rand() % (this->competitors.size() - 1);
+				auto element = this->competitors.at(rndIndex);
+				this->competitors.erase(this->competitors.begin() + rndIndex);
+				this->competitors.push_back(element);
+			}
+		}
+		else if (this->matchType == sorted) {
+			sort(this->competitors.begin(), this->competitors.end(), sortByRank<T>);
+		}
 
-            //*************************************
-            //create matches all the way to the top
-            //*************************************
-            for(auto g = groups.begin(); g != groups.end(); g++){
-                //this is the very first round of group matches at leaf level
-                queue<Match<T>*> groupMatches;
-                while(!g->Empty())
-                {
-                    if(g->GetSize() >= 2){//more than 2 competitors are left
-                        Match<T>* curMatch = new Match<T>;
-                        curMatch->Match1 = new Match<T>;
-                        curMatch->Match2 = new Match<T>;
-                        curMatch->Match1->Winner = g->GetNextCompetitor();
-                        curMatch->Match2->Winner = g->GetNextCompetitor();
-                        curMatch->Winner = curMatch->Match1->Winner * curMatch->Match2->Winner;
-                        this->roundPlayed++;
-                        groupMatches.push(curMatch);
-                    }else{//only 1 competitor left
-                        Match<T>* curMatch = new Match<T>;
-                        curMatch->Match1 = new Match<T>;
-                        curMatch->Match2 = new Match<T>;
-                        curMatch->Match1->Winner = g->GetNextCompetitor();
-                        curMatch->Match2->Winner = curMatch->Match1->Winner;
-                        curMatch->Winner = curMatch->Match1->Winner;
-                        this->roundPlayed++;
-                        groupMatches.push(curMatch);
-                    }
-                }
+		//*********************************
+		//assign competitors into groups
+		//*********************************
+		for (auto cmp = competitors.begin(); cmp != competitors.end();) {
+			for (auto g = groups.begin(); g != groups.end(); g++) {
+				g->Add(*cmp);
+				cmp++;
+				if (cmp == this->competitors.end())
+					break;
+			}
+		}
 
-                //let the first level winners compete all the way to a group champion
-                while(groupMatches.size() > 1){
-                    Match<T>* match1 = groupMatches.front();
-                    groupMatches.pop();
-                    Match<T>* match2 = groupMatches.front();
-                    groupMatches.pop();
+		//*************************************
+		//create matches all the way to the top
+		//*************************************
+		for (auto g = groups.begin(); g != groups.end(); g++) {
+			//this is the very first round of group matches at leaf level
+			queue<Match<T>*> groupMatches;
+			while (!g->Empty())
+			{
+				if (g->GetSize() >= 2) {//more than 2 competitors are left
+					Match<T>* curMatch = new Match<T>;
+					curMatch->Match1 = new Match<T>;
+					curMatch->Match2 = new Match<T>;
+					curMatch->Match1->Winner = g->GetNextCompetitor();
+					curMatch->Match2->Winner = g->GetNextCompetitor();
+					curMatch->Winner = curMatch->Match1->Winner * curMatch->Match2->Winner;
+					this->roundPlayed++;
+					groupMatches.push(curMatch);
+				}
+				else {//only 1 competitor left
+					Match<T>* curMatch = new Match<T>;
+					curMatch->Match1 = new Match<T>;
+					curMatch->Match2 = new Match<T>;
+					curMatch->Match1->Winner = g->GetNextCompetitor();
+					curMatch->Match2->Winner = curMatch->Match1->Winner;
+					curMatch->Winner = curMatch->Match1->Winner;
+					this->roundPlayed++;
+					groupMatches.push(curMatch);
+				}
+			}
 
-                    Match<T>* curMatch = new Match<T>;
-                    curMatch->Match1 = match1;
-                    curMatch->Match2 = match2;
-                    //winner here
-                    curMatch->Winner = curMatch->Match1->Winner * curMatch->Match2->Winner;
-                    this->roundPlayed++;
+			//let the first level winners compete all the way to a group champion
+			while (groupMatches.size() > 1) {
+				Match<T>* match1 = groupMatches.front();
+				groupMatches.pop();
+				Match<T>* match2 = groupMatches.front();
+				groupMatches.pop();
 
-                    groupMatches.push(curMatch);
-                }
+				Match<T>* curMatch = new Match<T>;
+				curMatch->Match1 = match1;
+				curMatch->Match2 = match2;
+				//winner here
+				curMatch->Winner = curMatch->Match1->Winner * curMatch->Match2->Winner;
+				this->roundPlayed++;
 
-                matches.push(groupMatches.front());
-                groupMatches.pop();
-            }
+				groupMatches.push(curMatch);
+			}
 
-            //Find tournament champions amongst all group champions
-            while(matches.size() > 1){
-                Match<T>* match1 = matches.front();
-                matches.pop();
-                Match<T>* match2 = matches.front();
-                matches.pop();
+			matches.push(groupMatches.front());
+			groupMatches.pop();
+		}
 
-                Match<T>* curMatch = new Match<T>;
-                curMatch->Match1 = match1;
-                curMatch->Match2 = match2;
-                //winner here
-                curMatch->Winner = curMatch->Match1->Winner * curMatch->Match2->Winner;
-                this->roundPlayed++;
+		//Find a tournament champion amongst all group champions
+		while (matches.size() > 1) {
+			Match<T>* match1 = matches.front();
+			matches.pop();
+			Match<T>* match2 = matches.front();
+			matches.pop();
 
-                matches.push(curMatch);
-            }
+			Match<T>* curMatch = new Match<T>;
+			curMatch->Match1 = match1;
+			curMatch->Match2 = match2;
+			//winner here
+			curMatch->Winner = curMatch->Match1->Winner * curMatch->Match2->Winner;
+			this->roundPlayed++;
 
-            Match<T>* championship = matches.front();
-            this->winner = championship->Winner;
-            return this->winner;
-        }
+			matches.push(curMatch);
+		}
+
+		Match<T>* championship = matches.front();
+		this->winner = championship->Winner;
+		return this->winner;
+	}
 };
 
 template<class T>
-class Match{
-    private:
+class Match {
+private:
 
-    public:
-        Match(){}
-        ~Match(){
-            cout << "Match with winner " << Winner.getName() << " is destroyed" << endl;
-        }
-        Match<T>* Match1 = nullptr;
-        Match<T>* Match2 = nullptr;
-        T Winner;
+public:
+	Match() {}
+	~Match() {
+		cout << "Match with winner " << Winner.getName() << " is destroyed" << endl;
+	}
+
+	Match<T>* Match1 = nullptr;
+	Match<T>* Match2 = nullptr;
+	T Winner;
 };
 
-int main(){
-    SingleElimination_Tournament<Competitor>* t = 
-        new SingleElimination_Tournament<Competitor>(sorted,2);
+int main() {
+	SingleElimination_Tournament<Competitor>* t =
+		new SingleElimination_Tournament<Competitor>(sorted, 4);
 
-    for(int i = 0; i < 8; i++){
-        string name = "Competitor " + to_string(i);
-        Competitor c(name);
-        c.setSkillLevel(i);
-        t->Enter(c);
-    }
+	for (int i = 0; i < 8; i++) {
+		string name = "Competitor " + to_string(i);
+		Competitor c(name);
+		c.setSkillLevel(i);
+		t->Enter(c);
+	}
 
-    cout << *t << endl;
 
-    // SingleElimination_Tournament<Competitor> copyTournament = *t;
+	SingleElimination_Tournament<Competitor> copyTournament = *t;
 
-    // cout << copyTournament << endl;
+	cout << copyTournament << endl;
 
-    delete t;
+	delete t;
 }
