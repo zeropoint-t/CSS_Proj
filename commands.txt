@@ -1,2 +1,6 @@
 //copy contents of a folder to a destination
-rsync -r ~/Documents/Projects/SFML/SFML/Frameworks/. ~/Desktop
+rsync -r ~/Documents/Projects/SFML/"External Libraries"/SFML/extlibs/. /Library/Frameworks
+
+//SFML - run exe with dylib path
+export LD_LIBRARY_PATH=/Users/tetsuya/Documents/Projects/C++/Projects/SFML/ExternalLibraries/SFML/lib && ./main
+
