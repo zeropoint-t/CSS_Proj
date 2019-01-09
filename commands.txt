@@ -4,3 +4,61 @@ rsync -r ~/Documents/Projects/SFML/"External Libraries"/SFML/extlibs/. /Library/
 //SFML - run exe with dylib path
 export LD_LIBRARY_PATH=/Users/tetsuya/Documents/Projects/C++/Projects/SFML/ExternalLibraries/SFML/lib && ./main
 
+
+
+
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "type": "shell",
+            "command": "g++",
+            "args": [
+                "-g", 
+                "-std=c++11",
+                "${workspaceFolder}/SFML/main.cpp",
+                "-I",
+                "${workspaceFolder}/SFML/ExternalLibraries/SFML/include",
+                "-o", 
+                "${workspaceFolder}/SFML/main",
+                "-L",
+                "${workspaceFolder}/SFML/ExternalLibraries/SFML/lib",
+                "-lsfml-graphics",
+                "-lsfml-window",
+                "-lsfml-system"
+            ],
+            "group":{
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc",
+        }
+    ]
+}
+
+
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Launch",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/SFML/./main",
+            "args": [
+                "export LD_LIBRARY_PATH=${workspaceFolder}/SFML/ExternalLibraries/SFML/lib"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "lldb"
+        }
+    ]
+}
