@@ -89,7 +89,7 @@ istream & operator >> (istream &in, Poly &p)
 // --default constructor-----------------------------------------------------------------------
 // Description: default constructor
 // --------------------------------------------------------------------------------------------
-Poly::Poly():arr(nullptr), maxExponent(-1){}
+Poly::Poly():arr(NULL), maxExponent(-1){}
 
 // --Poly::Poly(int coeff, int exp)------------------------------------------------------------
 // Description: a constructor that takes initial coefficient and exponent
@@ -423,9 +423,9 @@ void Poly::setCoeff(int coeff, int exp)
             newArr[i] = this->arr[i];
         }
         //free up the space for the internal array
-        if(this->arr != nullptr){
+        if(this->arr != NULL){
             delete[] this->arr;
-            this->arr = nullptr;
+            this->arr = NULL;
         }
         
         //assign new array to internal array
@@ -449,7 +449,7 @@ void Poly::clear()
     if(this->maxExponent != -1)
     {
         // cout << "destructor called" << endl;
-        if(arr != nullptr){
+        if(arr != NULL){
             // cout << "------clear called at " << this << "------" << endl;
             // for(int i = 0; i <= maxExponent; i++){
             //     cout << arr[i];
@@ -457,7 +457,7 @@ void Poly::clear()
             // cout << endl;
             delete[] arr;
         }
-        arr = nullptr;
+        arr = NULL;
         this->maxExponent = -1;
     }
 }
