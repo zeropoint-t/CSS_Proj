@@ -122,13 +122,13 @@ Poly::Poly(const Poly& p):
     maxExponent(p.maxExponent),
     arr(new int(p.maxExponent + 1))
 {
-    cout << "Copy constructor called" << endl;
+    // cout << "Copy constructor called" << endl;
     if(this != &p){
         // this->maxExponent = p.maxExponent;
         // this->arr = new int(this->maxExponent + 1);
         for(int i = 0; i <= this->maxExponent; i++)
         {
-            cout << p.arr[i] << endl;
+            // cout << p.arr[i] << endl;
             this->arr[i] = p.arr[i];
         }
     }
