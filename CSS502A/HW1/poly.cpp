@@ -456,17 +456,17 @@ void Poly::clear()
 {
     if(this->maxExponent != -1)
     {
-        // // cout << "destructor called" << endl;
-        // if(arr != nullptr){
-        //     cout << "------clear called at " << this << "------" << endl;
-        //     for(int i = 0; i <= maxExponent; i++){
-        //         cout << arr[i];
-        //     }
-        //     cout << endl;
-        //     delete[] arr;
-        // }
-        // arr = nullptr;
-        // this->maxExponent = -1;
+        // cout << "destructor called" << endl;
+        if(arr != nullptr){
+            cout << "------clear called at " << this << "------" << endl;
+            for(int i = 0; i <= maxExponent; i++){
+                cout << arr[i];
+            }
+            cout << endl;
+            // delete[] arr;
+        }
+        arr = nullptr;
+        this->maxExponent = -1;
     }
 }
 
