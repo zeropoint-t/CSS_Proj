@@ -96,8 +96,12 @@ Poly::Poly(){}
 // --------------------------------------------------------------------------------------------
 Poly::Poly(int coeff, int exp):
     maxExponent(exp),
-    arr(new int[exp + 1]{0})
+    arr(new int[exp + 1])
 {
+    for(int i = 0; i <= this->maxExponent; i++)
+    {
+        this->arr[i] = 0;
+    }
     this->arr[this->maxExponent] = coeff;
 }
 
@@ -106,7 +110,7 @@ Poly::Poly(int coeff, int exp):
 // --------------------------------------------------------------------------------------------
 Poly::Poly(int coeff):
     maxExponent(0),
-    arr(new int[1]{0})
+    arr(new int[1])
 {
     arr[0] = coeff;
 }
