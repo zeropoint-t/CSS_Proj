@@ -26,8 +26,8 @@ class Poly
     friend istream & operator >> (istream &in, Poly &p) ;
 public:
     Poly();
-    Poly(int);
-    Poly(int,int);
+    // Poly(int);
+    Poly(int, int = 0);
     Poly(const Poly&);
     ~Poly();
 
@@ -42,13 +42,16 @@ public:
     bool operator!=(const Poly&);
     bool operator>>(const string);
  
-    int getCoeff(int);
+    int getCoeff(int) const;
     void setCoeff(int,int);
+    int getSize() const{
+        return maxExponent + 1;
+    }
 private:
     //an array that stores coefficients at subscripts corresponding to exponents
-    int* arr = nullptr;
+    int* arr;
     //maximum exponent
-    int maxExponent = -1;
+    int maxExponent;
     //resets poly object
     void clear();
 };

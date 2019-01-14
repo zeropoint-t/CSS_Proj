@@ -89,7 +89,7 @@ istream & operator >> (istream &in, Poly &p)
 // --default constructor-----------------------------------------------------------------------
 // Description: default constructor
 // --------------------------------------------------------------------------------------------
-Poly::Poly(){}
+Poly::Poly():arr(nullptr), maxExponent(-1){}
 
 // --Poly::Poly(int coeff, int exp)------------------------------------------------------------
 // Description: a constructor that takes initial coefficient and exponent
@@ -105,15 +105,22 @@ Poly::Poly(int coeff, int exp):
     this->arr[this->maxExponent] = coeff;
 }
 
-// --Poly::Poly(int coeff)---------------------------------------------------------------------
-// Description: a constructor that takes only initial coefficient and exponent defaults to 0
-// --------------------------------------------------------------------------------------------
-Poly::Poly(int coeff):
-    maxExponent(0),
-    arr(new int[1])
-{
-    arr[0] = coeff;
-}
+// // --Poly::Poly(int coeff)---------------------------------------------------------------------
+// // Description: a constructor that takes only initial coefficient and exponent defaults to 0
+// // --------------------------------------------------------------------------------------------
+// Poly::Poly(int coeff):
+//     maxExponent(0),
+//     arr(new int[1])
+// {
+//     for(int i = 0; i <= this->maxExponent; i++)
+//     {
+//         this->arr[i] = 0;
+//     }
+//     arr[0] = coeff;
+//     // for(int i = 0; i <= maxExponent; i++){
+//     //     cout << arr[i] << endl;
+//     // }
+// }
 
 // --Poly::Poly(const Poly& p)-----------------------------------------------------------------
 // Description: a copy constructor
@@ -235,7 +242,6 @@ Poly Poly::operator-(const Poly& p)
 Poly Poly::operator*(const Poly& p)
 {
     Poly newPoly;
-    Poly* term = new Poly();
     for(int i = 0; i <= this->maxExponent; i++)
     {
         for(int j = 0; j <= p.maxExponent; j++)
@@ -244,9 +250,7 @@ Poly Poly::operator*(const Poly& p)
             int coeff2 = p.arr[j];
             int coeff = coeff1 * coeff2;
             int exp = i + j;
-            term->setCoeff(coeff, exp);
-            newPoly += *term;//Poly(coeff, exp);
-            term->clear();
+            newPoly += Poly(coeff, exp);
         }
     }
 
@@ -404,7 +408,7 @@ bool Poly::operator>>(const string line)
 // --int Poly::getCoeff(int exp)---------------------------------------------------------------
 // Description: returns a coefficient of a exponent. If exp is out of range, return 0
 // --------------------------------------------------------------------------------------------
-int Poly::getCoeff(int exp)
+int Poly::getCoeff(int exp) const
 {
     if(exp <= this->maxExponent && exp >= 0)
     {
@@ -426,7 +430,10 @@ void Poly::setCoeff(int coeff, int exp)
     if(exp > this->maxExponent)
     {
         //create a new array with the size of the new exponent
-        int* newArr = new int[exp + 1]{0};
+        int* newArr = new int[exp + 1];
+        for(int i = 0; i <= exp; i++){
+            newArr[i] = 0;
+        }
         //copy over elements
         for(int i = 0; i <= this->maxExponent; i++)
         {
@@ -464,7 +471,7 @@ void Poly::clear()
             // for(int i = 0; i <= maxExponent; i++){
             //     cout << arr[i];
             // }
-            cout << endl;
+            // cout << endl;
             delete[] arr;
         }
         arr = nullptr;

@@ -71,9 +71,13 @@ int main() {
     // p1 *= p2;
     // cout << p1 << endl;
 
-    Poly A(5, 7), B(3, 4), C(2), D(A), X, Y;
-    Poly A2, B2, Z1, Z2;
-    
+    // Poly A(5, 7), B(3, 4), C(2), D(A), X, Y;
+    // Poly A2, B2, Z1, Z2;
+    Poly A(5, 7);
+    Poly B(3, 4);
+    Poly C(2,5);
+    Poly D(A);
+    Poly E(4,3);
     // set polynomials A and B to desired values
     // A = +5x^7 -4x^3 +10x -2
     // B = +3x^4 +1x^3
@@ -82,25 +86,29 @@ int main() {
     A >> "5 2";
     cout << "A = " << A << endl;
     cout << "B = " << B << endl;
-    cout << "Compute  D = A * B - 15" << endl;
-    cout << "Before: D =" << D << endl;
+    cout << "C = " << C << endl;
+    cout << "D = " << D << endl;
+    // cout << "C = " << C << endl;
+    // cout << "Compute  D = A * B - 15" << endl;
+    cout << "Before: E =" << E << endl;
     D = A * B - 15;
+    // cout << "D size " << D.getSize() << endl;
     cout << "After:  D =" << D << endl << endl;
-    cout << "Test assignment operators" << endl;
-    X = C = D = D;
-    Y += A -= B *= A;
-    cout << "X =" << X << endl;
-    cout << "Y =" << Y << endl << endl;
-    cout << "Get and Set coefficient" << endl;
-    int coeff = D.getCoeff(0);
-    cout << "coeff of subscript 0 of D is: " << coeff << endl;
-    cout << "Doing getCoeff for term -20000" << endl;
+    // cout << "Test assignment operators" << endl;
+    // X = C = D = D;
+    // Y += A -= B *= A;
+    // cout << "X =" << X << endl;
+    // cout << "Y =" << Y << endl << endl;
+    // cout << "Get and Set coefficient" << endl;
+    // int coeff = D.getCoeff(0);
+    // cout << "coeff of subscript 0 of D is: " << coeff << endl;
+    // cout << "Doing getCoeff for term -20000" << endl;
     // coeff = D.getCoeff(-20000);              
     // handle value out of rangeD.setCoeff(50, 0);                        
     // set x^0 coeff to 50
-    cout << "D =" << D << endl;
+    // cout << "D =" << D << endl;
     // D.setCoeff(50, 20000);                    
     // set x^20000 coeff to 50
-    cout << "D =" << D << endl;
+    // cout << "D =" << D << endl;
     return 0;
 }
