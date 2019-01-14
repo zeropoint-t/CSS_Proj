@@ -26,7 +26,6 @@ class Poly
     friend istream & operator >> (istream &in, Poly &p) ;
 public:
     Poly();
-    // Poly(int);
     Poly(int, int = 0);
     Poly(const Poly&);
     ~Poly();

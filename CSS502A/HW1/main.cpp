@@ -75,25 +75,25 @@ int main() {
     // Poly A2, B2, Z1, Z2;
     Poly A(5, 7);
     Poly B(3, 4);
-    Poly C(2,5);
-    Poly D(A);
-    Poly E(4,3);
+    // Poly C(2,5);
+    // Poly D(A);
+    // Poly E(4,3);
     // set polynomials A and B to desired values
     // A = +5x^7 -4x^3 +10x -2
     // B = +3x^4 +1x^3
     cout << "Enter terms for polynomial A.  Enter a coefficient " << endl<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
     // cin >> A;                                     // or use a bunch of setCoeffcout << "Enter terms for polynomial B.  Enter a coefficient " << endl<< "then exponent for each term. Enter -1 -1 to terminate." << endl;cin >> B;                                     // or use a bunch of setCoeff// outputs exactly what is in quotes: "A = +5x^7 -4x^3 +10x -2"cout << "A =" << A << endl;// outputs exactly what is in quotes: "B = +3x^4 +1x^3"cout << "B =" << B << endl << endl;A2 = A;B2 = B;C = A + B;cout << "Compute C = A + B: " << C << endl << endl;cout << ((A == B) ? "A == B" : "A is not == B") << endl;cout << ((A != B) ? "A is not == B" : "A == B") << endl << endl;Z1 = A2 - B2;cout << "Compute  Z1 = A2 - B2: " << Z1 << endl;Z2 = B2 - A2;cout << "Compute  Z2 = B2 - A2: " << Z2 << endl << endl;
-    A >> "5 2";
+    // A >> "5 2";
     cout << "A = " << A << endl;
     cout << "B = " << B << endl;
-    cout << "C = " << C << endl;
-    cout << "D = " << D << endl;
+    // cout << "C = " << C << endl;
+    // cout << "D = " << D << endl;
     // cout << "C = " << C << endl;
     // cout << "Compute  D = A * B - 15" << endl;
-    cout << "Before: E =" << E << endl;
-    D = A * B - 15;
+    // cout << "Before: E =" << E << endl;
+    // D = A * B - 15;
     // cout << "D size " << D.getSize() << endl;
-    cout << "After:  D =" << D << endl << endl;
+    // cout << "After:  D =" << D << endl << endl;
     // cout << "Test assignment operators" << endl;
     // X = C = D = D;
     // Y += A -= B *= A;

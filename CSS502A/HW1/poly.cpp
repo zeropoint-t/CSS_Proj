@@ -105,23 +105,6 @@ Poly::Poly(int coeff, int exp):
     this->arr[this->maxExponent] = coeff;
 }
 
-// // --Poly::Poly(int coeff)---------------------------------------------------------------------
-// // Description: a constructor that takes only initial coefficient and exponent defaults to 0
-// // --------------------------------------------------------------------------------------------
-// Poly::Poly(int coeff):
-//     maxExponent(0),
-//     arr(new int[1])
-// {
-//     for(int i = 0; i <= this->maxExponent; i++)
-//     {
-//         this->arr[i] = 0;
-//     }
-//     arr[0] = coeff;
-//     // for(int i = 0; i <= maxExponent; i++){
-//     //     cout << arr[i] << endl;
-//     // }
-// }
-
 // --Poly::Poly(const Poly& p)-----------------------------------------------------------------
 // Description: a copy constructor
 // --------------------------------------------------------------------------------------------
