@@ -122,14 +122,14 @@ Poly::Poly(const Poly& p):
     maxExponent(p.maxExponent),
     arr(new int(p.maxExponent + 1))
 {
-    if(this != &p){
+    // if(this != &p){
         // this->maxExponent = p.maxExponent;
         // this->arr = new int(this->maxExponent + 1);
         for(int i = 0; i <= this->maxExponent; i++)
         {
             this->arr[i] = p.arr[i];
         }
-    }
+    // }
 }
 
 // --Poly::~Poly()-----------------------------------------------------------------------------
