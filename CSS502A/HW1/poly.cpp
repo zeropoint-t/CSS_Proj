@@ -460,10 +460,10 @@ void Poly::clear()
     {
         // cout << "destructor called" << endl;
         if(arr != nullptr){
-            cout << "------clear called at " << this << "------" << endl;
-            for(int i = 0; i <= maxExponent; i++){
-                cout << arr[i];
-            }
+            // cout << "------clear called at " << this << "------" << endl;
+            // for(int i = 0; i <= maxExponent; i++){
+            //     cout << arr[i];
+            // }
             cout << endl;
             // delete[] arr;
         }
