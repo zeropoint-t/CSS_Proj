@@ -122,11 +122,13 @@ Poly::Poly(const Poly& p):
     maxExponent(p.maxExponent),
     arr(new int(p.maxExponent + 1))
 {
+    cout << "Copy constructor called" << endl;
     // if(this != &p){
         // this->maxExponent = p.maxExponent;
         // this->arr = new int(this->maxExponent + 1);
         for(int i = 0; i <= this->maxExponent; i++)
         {
+            cout << p.arr[i] << endl;
             this->arr[i] = p.arr[i];
         }
     // }
@@ -349,7 +351,7 @@ bool Poly::operator!=(const Poly& p)
 // --------------------------------------------------------------------------------------------
 bool Poly::operator>>(const string line)
 {
-    cout << "Member function >> is called with " << line << endl;
+    // cout << "Member function >> is called with " << line << endl;
     // cout << "Mem address: " << this << endl;
 
     //measure the size of inputs
@@ -363,7 +365,7 @@ bool Poly::operator>>(const string line)
     }
     ssize.clear();
 
-    cout << "size: " << size << endl;
+    // cout << "size: " << size << endl;
 
     //fill in inputs array
     int inputs[size];
@@ -371,7 +373,7 @@ bool Poly::operator>>(const string line)
         inputs[i] = 0;    // Initialize all elements to zero.
     }
 
-    cout << "inputs address: " << inputs << endl;
+    // cout << "inputs address: " << inputs << endl;
     stringstream ssin(line);
     int i = 0;
     while (ssin.good())
