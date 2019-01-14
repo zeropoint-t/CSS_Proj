@@ -71,7 +71,7 @@ int main() {
     // p1 *= p2;
     // cout << p1 << endl;
 
-    Poly A(5, 7), B(3, 4), C(2), D(A), X, Y;
+    Poly A(5, 7), B(3, 4), D(A), X, Y;
     // Poly A2, B2, Z1, Z2;
     
     // set polynomials A and B to desired values
