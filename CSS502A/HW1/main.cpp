@@ -76,7 +76,7 @@ int main() {
     Poly A(5, 7);
     Poly B(3, 4);
     // Poly C(2,5);
-    // Poly D(A);
+    Poly D(A);
     // Poly E(4,3);
     // set polynomials A and B to desired values
     // A = +5x^7 -4x^3 +10x -2
@@ -91,9 +91,9 @@ int main() {
     // cout << "C = " << C << endl;
     // cout << "Compute  D = A * B - 15" << endl;
     // cout << "Before: E =" << E << endl;
-    // D = A * B - 15;
+    D = A * B - 15;
     // cout << "D size " << D.getSize() << endl;
-    // cout << "After:  D =" << D << endl << endl;
+    cout << "After:  D =" << D << endl << endl;
     // cout << "Test assignment operators" << endl;
     // X = C = D = D;
     // Y += A -= B *= A;
