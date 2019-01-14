@@ -123,7 +123,7 @@ Poly::Poly(const Poly& p):
     arr(new int(p.maxExponent + 1))
 {
     cout << "Copy constructor called" << endl;
-    // if(this != &p){
+    if(this != &p){
         // this->maxExponent = p.maxExponent;
         // this->arr = new int(this->maxExponent + 1);
         for(int i = 0; i <= this->maxExponent; i++)
@@ -131,7 +131,7 @@ Poly::Poly(const Poly& p):
             cout << p.arr[i] << endl;
             this->arr[i] = p.arr[i];
         }
-    // }
+    }
 }
 
 // --Poly::~Poly()-----------------------------------------------------------------------------
@@ -151,7 +151,6 @@ Poly& Poly::operator=(const Poly& p)
     if(this != &p)
     {
         this->clear();
-        // delete[] arr;
         this->maxExponent = p.maxExponent;
         this->arr = new int[this->maxExponent + 1];
         for(int i = 0; i <= this->maxExponent; i++)
@@ -434,7 +433,8 @@ void Poly::setCoeff(int coeff, int exp)
             newArr[i] = this->arr[i];
         }
         //free up the space for the internal array
-        delete[] this->arr;
+        if(this->arr != nullptr)
+            delete[] this->arr;
         this->arr = nullptr;
         //assign new array to internal array
         this->arr = newArr;
@@ -457,7 +457,8 @@ void Poly::clear()
     if(this->maxExponent != -1)
     {
         // cout << "destructor called" << endl;
-        delete[] arr;
+        if(arr != nullptr)
+            delete[] arr;
         arr = nullptr;
         this->maxExponent = -1;
     }
