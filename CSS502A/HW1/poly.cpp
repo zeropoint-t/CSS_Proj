@@ -433,9 +433,11 @@ void Poly::setCoeff(int coeff, int exp)
             newArr[i] = this->arr[i];
         }
         //free up the space for the internal array
-        if(this->arr != nullptr)
+        if(this->arr != nullptr){
             delete[] this->arr;
-        this->arr = nullptr;
+            this->arr = nullptr;
+        }
+        
         //assign new array to internal array
         this->arr = newArr;
         //set maxExponent to the new exp
@@ -463,7 +465,7 @@ void Poly::clear()
                 cout << arr[i];
             }
             cout << endl;
-            // delete[] arr;
+            delete[] arr;
         }
         arr = nullptr;
         this->maxExponent = -1;
