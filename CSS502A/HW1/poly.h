@@ -1,63 +1,56 @@
-
-#ifndef House_h
-#define House_h
+// ------------------------------------------------ file name ------------------------------------------------------- -
+// Programmer Name:             Tetsuya Hayashi
+// Course Section Number:       CSS502A - Winter 2019
+// Creation Date:               01/13/2019
+// Date of Last Modification:   01/13/2019
+// -------------------------------------------------------------------------------------------------------------------- 
+// Purpose - a brief statement of the program's function
+// Poly - Header file - this class represents a polynomial function that allows addition,
+// subtraction and multiplication of ploynomals
+// -------------------------------------------------------------------------------------------------------------------- 
+// Notes on specifications, special algorithms, and assumptions.
+// 
+// --------------------------------------------------------------------------------------------------------------------
+#ifndef Poly_h
+#define Poly_h
 
 #include <iostream>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
-class poly
+class Poly
 {
-    friend ostream & operator << (ostream &out, const poly &c);
+    friend ostream & operator << (ostream &out, const Poly &p);
+    friend istream & operator >> (istream &in, Poly &p) ;
 public:
-    poly(int);
-    poly(int,int);
-    poly(const poly&);
-    ~poly();
+    Poly();
+    Poly(int);
+    Poly(int,int);
+    Poly(const Poly&);
+    ~Poly();
 
-    poly& operator=(const poly&);
-    poly& operator+=(const poly&);
-    poly& operator-=(const poly&);
-    poly& operator*=(const poly&);
-    bool operator==(const poly&);
-    bool operator!=(const poly&);
-    void operator>>(const poly&);
-
+    Poly& operator=(const Poly&);
+    Poly operator+(const Poly&);
+    Poly operator-(const Poly&);
+    Poly operator*(const Poly&);
+    Poly& operator+=(const Poly&);
+    Poly& operator-=(const Poly&);
+    Poly& operator*=(const Poly&);
+    bool operator==(const Poly&);
+    bool operator!=(const Poly&);
+    bool operator>>(const string);
+ 
     int getCoeff(int);
+    void setCoeff(int,int);
 private:
-    int* arr;
-    size_t size;
+    //an array that stores coefficients at subscripts corresponding to exponents
+    int* arr = nullptr;
+    //maximum exponent
+    int maxExponent = -1;
+    //resets poly object
+    void clear();
 };
-
-ostream & operator << (ostream &out, const poly &p) 
-{
-    for(int i = 0; i < p.size; i++)
-    {
-        out << p.arr[i] << " ";
-    }
-    return out; 
-} 
-
-poly::poly(int coeff, int exp)
-{
-    this->size = exp + 1;
-    arr = new int[this->size]{0};
-    arr[this->size - 1] = coeff;
-}
-
-poly::~poly()
-{
-    delete[] arr;
-}
-
-int poly::getCoeff(int exp)
-{
-    if(exp < this->size && exp >= 0){
-        return this->arr[exp];
-    }else{
-        return 0;
-    }
-}
 
 #endif
