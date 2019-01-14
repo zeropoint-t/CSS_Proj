@@ -91,7 +91,7 @@ int main() {
     // cout << "C = " << C << endl;
     // cout << "Compute  D = A * B - 15" << endl;
     // cout << "Before: E =" << E << endl;
-    D = A * B - 15;
+    D = A + B;
     // cout << "D size " << D.getSize() << endl;
     cout << "After:  D =" << D << endl << endl;
     // cout << "Test assignment operators" << endl;

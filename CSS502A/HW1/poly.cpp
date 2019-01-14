@@ -89,7 +89,9 @@ istream & operator >> (istream &in, Poly &p)
 // --default constructor-----------------------------------------------------------------------
 // Description: default constructor
 // --------------------------------------------------------------------------------------------
-Poly::Poly():arr(NULL), maxExponent(-1){}
+Poly::Poly():arr(NULL), maxExponent(-1){
+    cout << "Default Constructor at " << this << endl;
+}
 
 // --Poly::Poly(int coeff, int exp)------------------------------------------------------------
 // Description: a constructor that takes initial coefficient and exponent
@@ -98,6 +100,7 @@ Poly::Poly(int coeff, int exp):
     maxExponent(exp),
     arr(new int[exp + 1])
 {
+    cout << "Constructor Poly(int coeff, int exp) at " << this << endl;
     for(int i = 0; i <= this->maxExponent; i++)
     {
         this->arr[i] = 0;
@@ -112,6 +115,7 @@ Poly::Poly(const Poly& p):
     maxExponent(p.maxExponent),
     arr(new int(p.maxExponent + 1))
 {
+    cout << "Copy Constructor Poly(const Poly& p) at " << this << endl;
     // cout << "Copy constructor called" << endl;
     if(this != &p){
         // this->maxExponent = p.maxExponent;
@@ -227,13 +231,19 @@ Poly Poly::operator*(const Poly& p)
     Poly newPoly;
     for(int i = 0; i <= this->maxExponent; i++)
     {
-        for(int j = 0; j <= p.maxExponent; j++)
-        {
-            int coeff1 = this->arr[i];
-            int coeff2 = p.arr[j];
-            int coeff = coeff1 * coeff2;
-            int exp = i + j;
-            newPoly += Poly(coeff, exp);
+        if(this->arr[i] != 0){
+            for(int j = 0; j <= p.maxExponent; j++)
+            {
+                if(p.arr[j] != 0){
+                    int coeff1 = this->arr[i];
+                    int coeff2 = p.arr[j];
+                    int coeff = coeff1 * coeff2;
+                    int exp = i + j;
+                    // cout << "multiplying" << endl;
+                    Poly temp(coeff, exp);
+                    newPoly += temp;
+                }
+            }
         }
     }
 
@@ -450,11 +460,11 @@ void Poly::clear()
     {
         // cout << "destructor called" << endl;
         if(arr != NULL){
-            // cout << "------clear called at " << this << "------" << endl;
-            // for(int i = 0; i <= maxExponent; i++){
-            //     cout << arr[i];
-            // }
-            // cout << endl;
+            cout << "------clear called at " << this << "------" << endl;
+            for(int i = 0; i <= maxExponent; i++){
+                cout << arr[i];
+            }
+            cout << endl;
             delete[] arr;
         }
         arr = NULL;
