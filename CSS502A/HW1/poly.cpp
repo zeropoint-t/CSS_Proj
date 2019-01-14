@@ -465,7 +465,7 @@ void Poly::clear()
             //     cout << arr[i];
             // }
             cout << endl;
-            // delete[] arr;
+            delete[] arr;
         }
         arr = nullptr;
         this->maxExponent = -1;
