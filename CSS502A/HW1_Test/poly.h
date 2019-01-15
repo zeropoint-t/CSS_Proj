@@ -22,12 +22,8 @@ public:
     Poly operator+(const Poly&);
     Poly& operator+=(const Poly&);
     bool operator>>(const string);
- 
-    int getCoeff(int) const;
+
     void setCoeff(int,int);
-    int getSize() const{
-        return maxExponent + 1;
-    }
 private:
     //an array that stores coefficients at subscripts corresponding to exponents
     int* arr;
@@ -83,33 +79,6 @@ ostream & operator << (ostream &out, const Poly &p)
         }// end of if(p.arr[i] != 0)
     }//end of for loop
     return out; 
-}
-
-// --istream & operator >>-----------------------------------------------------------------------
-// Description: overload cin which takes coefficient and exponent pairs from a user and 
-//              set coefficient for the exponent
-// ----------------------------------------------------------------------------------------------
-istream & operator >> (istream &in, Poly &p) 
-{
-    //Loop until break is called. 
-    while(true)
-    {
-        //take user inputs
-        string line;
-        cout << "Enter coefficient and exponent pairs in any order separated by a blank space." << endl;
-        cout << "Enter -1 -1 to terminate loop: ";
-        getline(cin, line);
-
-        //assign coeff and exp pairs
-        //if -1 -1 is in line, terminate will return true so break the loop
-        bool terminate = p >> line;
-
-        if(terminate)
-            break;
-
-        cout << endl;
-    }//end while
-    return in; 
 }
 
 // --default constructor-----------------------------------------------------------------------
@@ -296,19 +265,6 @@ bool Poly::operator>>(const string line)
     }
 
     return false;//terminate flag is false without coeff & exp are both -1
-}
-
-// --int Poly::getCoeff(int exp)---------------------------------------------------------------
-// Description: returns a coefficient of a exponent. If exp is out of range, return 0
-// --------------------------------------------------------------------------------------------
-int Poly::getCoeff(int exp) const
-{
-    if(exp <= this->maxExponent && exp >= 0)
-    {
-        return this->arr[exp];
-    }else{
-        return 0;
-    }
 }
 
 // --Poly::setCoeff(int coeff, int exp)--------------------------------------------------------
