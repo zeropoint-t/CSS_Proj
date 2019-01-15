@@ -106,25 +106,25 @@ Poly::Poly(int coeff, int exp):
 // --Poly::Poly(const Poly& p)-----------------------------------------------------------------
 // Description: a copy constructor
 // --------------------------------------------------------------------------------------------
-Poly::Poly(const Poly& p)
-{
-    cout << "Copy Constructor Poly(const Poly& p) at " << this << endl;
-    // cout << "Copy constructor called" << endl;
-    maxExponent = p.maxExponent;
-    arr = new int(p.maxExponent + 1);
+// Poly::Poly(const Poly& p)
+// {
+//     cout << "Copy Constructor Poly(const Poly& p) at " << this << endl;
+//     // cout << "Copy constructor called" << endl;
+//     maxExponent = p.maxExponent;
+//     arr = new int(p.maxExponent + 1);
 
-    cout << p.maxExponent << endl;
+//     cout << p.maxExponent << endl;
 
-    if(this != &p){
-        // this->maxExponent = p.maxExponent;
-        // this->arr = new int(this->maxExponent + 1);
-        for(int i = 0; i <= this->maxExponent; i++)
-        {
-            cout << i << endl;
-            arr[i] = p.arr[i];
-        }
-    }
-}
+//     if(this != &p){
+//         // this->maxExponent = p.maxExponent;
+//         // this->arr = new int(this->maxExponent + 1);
+//         for(int i = 0; i <= this->maxExponent; i++)
+//         {
+//             cout << i << endl;
+//             arr[i] = p.arr[i];
+//         }
+//     }
+// }
 
 // --Poly::~Poly()-----------------------------------------------------------------------------
 // Description: destructor - calls clear function that releases dynamic array
