@@ -15,5 +15,6 @@ int main() {
     cout << "B = " << B << endl;
     D = A + B;
     cout << D << endl;
+    Poly C(D);
     return 0;
 }
