@@ -118,12 +118,14 @@ Poly::Poly(const Poly& p)
     maxExponent = p.maxExponent;
     arr = new int(p.maxExponent + 1);
 
+    cout << p.maxExponent << endl;
+
     if(this != &p){
         // this->maxExponent = p.maxExponent;
         // this->arr = new int(this->maxExponent + 1);
         for(int i = 0; i <= this->maxExponent; i++)
         {
-            // cout << p.arr[i] << endl;
+            cout << i << endl;
             arr[i] = p.arr[i];
         }
     }
@@ -147,7 +149,7 @@ Poly& Poly::operator=(const Poly& p)
     {
         if(maxExponent != -1)
             this->clear();
-            
+
         this->maxExponent = p.maxExponent;
         this->arr = new int[this->maxExponent + 1];
         for(int i = 0; i <= this->maxExponent; i++)
