@@ -51,8 +51,6 @@ private:
     int* arr;
     //maximum exponent
     int maxExponent;
-    //resets poly object
-    void clear();
 };
 
 #endif

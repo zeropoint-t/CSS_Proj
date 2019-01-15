@@ -13,7 +13,7 @@ int main() {
     Poly D;
     cout << "A = " << A << endl;
     cout << "B = " << B << endl;
-    D = A + B;
+    // D = A + B;
     cout << D << endl;
     Poly C(D);
     return 0;

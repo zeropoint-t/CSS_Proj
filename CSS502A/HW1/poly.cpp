@@ -81,7 +81,7 @@ istream & operator >> (istream &in, Poly &p)
         if(terminate)
             break;
 
-        cout << endl;
+        // cout << endl;
     }//end while
     return in; 
 }
@@ -90,7 +90,7 @@ istream & operator >> (istream &in, Poly &p)
 // Description: default constructor
 // --------------------------------------------------------------------------------------------
 Poly::Poly():arr(NULL), maxExponent(-1){
-    cout << "Default Constructor at " << this << endl;
+    // cout << "Default Constructor at " << this << endl;
 }
 
 // --Poly::Poly(int coeff, int exp)------------------------------------------------------------
@@ -100,32 +100,30 @@ Poly::Poly(int coeff, int exp):
     maxExponent(exp),
     arr(new int[exp + 1])
 {
-    cout << "Constructor Poly(int coeff, int exp) at " << this << endl;
     for(int i = 0; i <= this->maxExponent; i++)
     {
-        this->arr[i] = 0;
+        arr[i] = 0;
     }
+
     this->arr[this->maxExponent] = coeff;
 }
 
 // --Poly::Poly(const Poly& p)-----------------------------------------------------------------
 // Description: a copy constructor
 // --------------------------------------------------------------------------------------------
-Poly::Poly(const Poly& p)
+Poly::Poly(const Poly& p): 
+    maxExponent(p.maxExponent), 
+    arr(new int[p.maxExponent + 1])
 {
     cout << "Copy Constructor Poly(const Poly& p) at " << this << endl;
-    // cout << "Copy constructor called" << endl;
-    maxExponent = p.maxExponent;
-    arr = new int(p.maxExponent + 1);
-
-    cout << p.maxExponent << endl;
+    for(int i = 0; i <= this->maxExponent; i++)
+    {
+        arr[i] = 0;
+    }
 
     if(this != &p){
-        // this->maxExponent = p.maxExponent;
-        // this->arr = new int(this->maxExponent + 1);
         for(int i = 0; i <= this->maxExponent; i++)
         {
-            cout << i << endl;
             arr[i] = p.arr[i];
         }
     }
@@ -137,7 +135,9 @@ Poly::Poly(const Poly& p)
 Poly::~Poly()
 {
     // cout << "destructor called at " << this << endl;
-    this->clear();
+    // this->clear();
+    delete[] this->arr;
+    this->maxExponent = -1;
 }
 
 // --Poly& Poly::operator=(const Poly& p)------------------------------------------------------
@@ -147,8 +147,9 @@ Poly& Poly::operator=(const Poly& p)
 {
     if(this != &p)
     {
-        if(maxExponent != -1)
-            this->clear();
+        if(maxExponent != -1){
+            delete[] this->arr;
+        }
 
         this->maxExponent = p.maxExponent;
         this->arr = new int[this->maxExponent + 1];
@@ -438,7 +439,7 @@ void Poly::setCoeff(int coeff, int exp)
             newArr[i] = this->arr[i];
         }
         //free up the space for the internal array
-        if(this->arr != NULL){
+        if(this->maxExponent != -1){
             delete[] this->arr;
             this->arr = NULL;
         }
@@ -456,24 +457,4 @@ void Poly::setCoeff(int coeff, int exp)
     }
 }
 
-// --void Poly::clear()------------------------------------------------------------------------
-// Description: resets this object by releasing dynamically allocated memory
-// --------------------------------------------------------------------------------------------
-void Poly::clear()
-{
-    if(this->maxExponent != -1)
-    {
-        // cout << "destructor called" << endl;
-        if(arr != NULL){
-            cout << "------clear called at " << this << "------" << endl;
-            for(int i = 0; i <= maxExponent; i++){
-                cout << arr[i];
-            }
-            cout << endl;
-            delete[] arr;
-        }
-        arr = NULL;
-        this->maxExponent = -1;
-    }
-}
 
