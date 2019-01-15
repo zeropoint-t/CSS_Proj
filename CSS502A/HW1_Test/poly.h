@@ -162,7 +162,7 @@ Poly::Poly(const Poly& p)
 // --------------------------------------------------------------------------------------------
 Poly::~Poly()
 {
-    // cout << "destructor called at " << this << endl;
+    cout << "destructor called at " << *this << endl;
     this->clear();
 }
 
@@ -173,6 +173,9 @@ Poly& Poly::operator=(const Poly& p)
 {
     if(this != &p)
     {
+        cout << p << endl;
+        cout << *this << endl;
+
         if(maxExponent != -1)
             this->clear();
 
@@ -192,6 +195,8 @@ Poly& Poly::operator=(const Poly& p)
 // --------------------------------------------------------------------------------------------
 Poly Poly::operator+(const Poly& p)
 {
+    cout << *this << endl;
+    cout << p << endl;
     //find max exponent between the 2 poly objects
     int maxExponent = this->maxExponent > p.maxExponent ? this->maxExponent : p.maxExponent;
     if(maxExponent >= 0)
