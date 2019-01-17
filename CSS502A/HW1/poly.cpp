@@ -18,14 +18,13 @@
 // ----------------------------------------------------------------------------------------------
 ostream & operator << (ostream &out, const Poly &p) 
 {
-    for(int i = p.maxExponent; i >= 0; i--)
-    {
-        if(p.arr[i] != 0)
+    if(p.maxExponent <= 0){
+        out << " 0";
+    }else{
+        for(int i = p.maxExponent; i >= 0; i--)
         {
-            if(i == p.maxExponent)//when exponent is maxExponent - no need for + sign
+            if(p.arr[i] != 0)
             {
-                out << p.arr[i] << "x" << "^" << i;
-            }else{
                 if(i == 1)//when exponent is 1
                 {
                     if(p.arr[i] < 0)
@@ -53,9 +52,9 @@ ostream & operator << (ostream &out, const Poly &p)
                         out << " +" << p.arr[i] << "x" << "^" << i;
                     }
                 }
-            }
-        }// end of if(p.arr[i] != 0)
-    }//end of for loop
+            }// end of if(p.arr[i] != 0)
+        }//end of for loop
+    }
     return out; 
 }
 
@@ -65,13 +64,17 @@ ostream & operator << (ostream &out, const Poly &p)
 // ----------------------------------------------------------------------------------------------
 istream & operator >> (istream &in, Poly &p) 
 {
+    //reset p
+    delete[] p.arr;
+    p.maxExponent = -1;
+    p.setCoeff(0,0);
+
     //Loop until break is called. 
     while(true)
     {
         //take user inputs
         string line;
-        cout << "Enter coefficient and exponent pairs in any order separated by a blank space." << endl;
-        cout << "Enter -1 -1 to terminate loop: ";
+
         getline(cin, line);
 
         //assign coeff and exp pairs
@@ -353,9 +356,6 @@ bool Poly::operator!=(const Poly& p)
 // --------------------------------------------------------------------------------------------
 bool Poly::operator>>(const string line)
 {
-    // cout << "Member function >> is called with " << line << endl;
-    // cout << "Mem address: " << this << endl;
-
     //measure the size of inputs
     int size = 0;
     string val;
@@ -367,12 +367,11 @@ bool Poly::operator>>(const string line)
     }
     ssize.clear();
 
-    // cout << "size: " << size << endl;
-
     //fill in inputs array
     int inputs[size];
-    for (int i = 0; i < size; i++) {
-        inputs[i] = 0;    // Initialize all elements to zero.
+    for (int i = 0; i < size; i++) 
+    {
+        inputs[i] = 0;// Initialize all elements to zero.
     }
 
     // cout << "inputs address: " << inputs << endl;
@@ -405,7 +404,7 @@ bool Poly::operator>>(const string line)
 }
 
 // --int Poly::getCoeff(int exp)---------------------------------------------------------------
-// Description: returns a coefficient of a exponent. If exp is out of range, return 0
+// Description: returns a coefficient of an exponent. If exp is out of range, return 0
 // --------------------------------------------------------------------------------------------
 int Poly::getCoeff(int exp) const
 {
