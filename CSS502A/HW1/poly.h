@@ -33,7 +33,7 @@ class Poly
 public:
     
     Poly();                     //default constructor
-    Poly(int32_t, int32_t = 0); //constructor that takes coefficient & exponent(defaults to 0 if not provided)
+    Poly(int, int = 0); //constructor that takes coefficient & exponent(defaults to 0 if not provided)
     Poly(const Poly&);          //copy constructor
     ~Poly();                    //destructor
 
@@ -49,11 +49,11 @@ public:
     bool operator!=(const Poly&);   //inequality, 2 poly objects are different
     bool operator>>(const string);  //set coefficients with a string. ex (5 7 -4 3 10 1 -2 0) = +5x^7 -4x^3 +10x -2
  
-    int32_t getCoeff(int32_t) const;    //returns a coeff of the exp(0 if the coeff is not found)
-    void setCoeff(int32_t,int32_t); //sets a coefficient and exponent. mutator
+    int getCoeff(int) const;    //returns a coeff of the exp(0 if the coeff is not found)
+    void setCoeff(int,int); //sets a coefficient and exponent. mutator
 private:
-    int32_t* arr;           //pointer to first element of array
-    int32_t maxExponent;    //maximum exponent
+    int* arr;           //pointer to first element of array
+    int maxExponent;    //maximum exponent
     void resetArr();        //sets 0 to all elements in arr
 };
 
