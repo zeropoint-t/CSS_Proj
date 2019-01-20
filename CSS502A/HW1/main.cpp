@@ -1,19 +1,22 @@
-// DO NOT change anything in this file. Your code must compile and give the
-// correct output with this main on the linux machines.
-// Make sure the file containing the member function source is: poly.cpp
-// Use all lowercase in the file names.// This main does not do a thorough job of testing.  When testing arrays,
-// be sure to test the middle and also all the boundary conditions.  Test
-// values on the boundary and outside the boundaries, i.e., too big/small.
-#include "poly.h"
+
+// -- main.cpp ------------------------------------------------------------------------------------
+// Programmer Name:             Tetsuya Hayashi
+// Course Section Number:       CSS502A - Winter 2019
+// Creation Date:               01/13/2019
+// Date of Last Modification:   01/20/2019
+// ---------------------------------------------------------------------------------------------- 
+// Purpose - driver statements to test Poly class
+// ---------------------------------------------------------------------------------------------- 
+// Notes on specifications, special algorithms, and assumptions.
+// 	Please change directory to a folder that contain main.cpp, poly.h and poly.h and
+// 	use a command "g++ main.cpp poly.cpp -o main" to cpmpile this program
+// 	and execute it with "./main" on linux machine
+// ----------------------------------------------------------------------------------------------
+
+#include "poly.h"//Poly class
 #include <iostream>
 using namespace std;
 int main() {
-
-	// Poly A(5,2), B(4,20);
-	// A >> "6 3 8 7 2 1 9 2 -1 -1";
-	// B >> "6 3 8 7 2 1 9 2 -1 -1";
-
-	// cout << ((A == B) ? "A == B" : "A is not == B") << endl;
 
 	Poly A(5, 7), B(3, 4), C(2), D(A), X, Y;
 	Poly A2, B2, Z1, Z2;
@@ -24,13 +27,13 @@ int main() {
 
 	cout << "Enter terms for polynomial A.  Enter a coefficient " << endl
 		<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
-	cin >> A;                                     // or use a bunch of setCoeff
-	// A >> "5 7 -4 3 10 1 -2 0 -1 -1";
+	// cin >> A;                                     // or use a bunch of setCoeff
+	A >> "5 7 -4 3 10 1 -2 0 -1 -1";
 
 	cout << "Enter terms for polynomial B.  Enter a coefficient " << endl
 		<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
-	cin >> B;                                     // or use a bunch of setCoeff
-	// B >> "3 4 1 3 -1 -1";
+	// cin >> B;                                     // or use a bunch of setCoeff
+	B >> "3 4 1 3 -1 -1";
 
 
 	// outputs exactly what is in quotes: "A = +5x^7 -4x^3 +10x -2"
@@ -71,5 +74,6 @@ int main() {
 	D.setCoeff(50, 0);                        // set x^0 coeff to 50
 	D.setCoeff(50, 20000);                    // set x^20000 coeff to 50
 	cout << "D =" << D << endl << endl;
+
     return 0;
 }

@@ -4,7 +4,6 @@
 // Creation Date:               01/13/2019
 // Date of Last Modification:   01/13/2019
 // -------------------------------------------------------------------------------------------------------------------- 
-// Purpose - a brief statement of the program's function
 // Poly - Header file - this class represents a polynomial function that allows addition,
 // subtraction and multiplication of ploynomals
 // -------------------------------------------------------------------------------------------------------------------- 

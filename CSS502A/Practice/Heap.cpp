@@ -38,8 +38,8 @@ void Heap<Comparable>::insert(Comparable *c)
     int position = size;
     while (*c < *items[position / 2])
     {
-        items[position] = items[position / 2];
-        position = position / 2;
+        items[position] = items[position / 2];//copy parent value down to the child
+        position = position / 2;//set position to parent index
     }
     
     items[position] = c;
@@ -47,22 +47,26 @@ void Heap<Comparable>::insert(Comparable *c)
 
 template <typename Comparable>
 bool Heap<Comparable>::deleteMin()
-	{
-		if (size == 0) return false;
-		delete items[1];
-		items[1] = items[size];
-		size--;
+{
+    if (size == 0) return false;
+    delete items[1];
+    items[1] = items[size];//set last item at position 1
+    size--;
 
-		percolateDown(1);
-		return true;
-	}
+    percolateDown(1);
+    return true;
+}
 
 template <typename Comparable>
 void Heap<Comparable>::percolateDown(int position)
 {
-    int child = position * 2;
-    if (child > size) return;
+    int child = position * 2;//point it to left child first
+
+    if (child > size) return;//no children at position
+
+    //set child index to point to the right child if right child is smaller
     if (child != size && *items[child] > *items[child + 1]) child++;
+
     if (*items[child] < *items[position]) 
     {
         swap(items[child], items[position]);

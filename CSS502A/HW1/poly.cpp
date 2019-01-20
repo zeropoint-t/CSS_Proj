@@ -1,12 +1,11 @@
-// -- poly.h ------------------------------------------------------------------------------------
+// -- poly.cpp ------------------------------------------------------------------------------------
 // Programmer Name:             Tetsuya Hayashi
 // Course Section Number:       CSS502A - Winter 2019
 // Creation Date:               01/13/2019
 // Date of Last Modification:   01/13/2019
 // ---------------------------------------------------------------------------------------------- 
-// Purpose - a brief statement of the program's function
-// Poly - Header file - this class represents a polynomial function that allows addition,
-// subtraction and multiplication of ploynomals
+// Poly - implementation file - this class represents implementations of polynomial functions 
+// that allows addition, subtraction and multiplication
 // ---------------------------------------------------------------------------------------------- 
 // Notes on specifications, special algorithms, and assumptions.
 // 
@@ -18,7 +17,8 @@
 // ----------------------------------------------------------------------------------------------
 ostream & operator << (ostream &out, const Poly &p) 
 {
-    if(p.maxExponent <= 0){//only 1 term with 0 exponent
+    if(p.maxExponent <= 0)
+    {//only 1 term with 0 exponent
         if(p.arr[0] < 0)
         {
             out << " -" << p.arr[0];
@@ -29,7 +29,8 @@ ostream & operator << (ostream &out, const Poly &p)
         {
             out << p.arr[0];
         }
-    }else{
+    }else
+    {
         for(int i = p.maxExponent; i >= 0; i--)
         {
             if(p.arr[i] != 0)
@@ -57,13 +58,14 @@ ostream & operator << (ostream &out, const Poly &p)
                     if(p.arr[i] < 0)
                     {
                         out << " " << p.arr[i] << "x" << "^" << i;//negative number already has "-" sign
-                    }else{
+                    }else
+                    {
                         out << " +" << p.arr[i] << "x" << "^" << i;
                     }
                 }
             }// end of if(p.arr[i] != 0)
         }//end of for loop
-    }
+    }//end of if(p.maxExponent <= 0)
     return out; 
 }
 
@@ -75,9 +77,6 @@ istream & operator >> (istream &in, Poly &p)
 {
     //reset p
     p.resetArr();
-    // delete[] p.arr;
-    // p.maxExponent = -1;
-    // p.setCoeff(0,0);
 
     //Loop until break is called. 
     while(true)
@@ -101,7 +100,8 @@ istream & operator >> (istream &in, Poly &p)
 // --default constructor-----------------------------------------------------------------------
 // Description: default constructor
 // --------------------------------------------------------------------------------------------
-Poly::Poly():arr(NULL), maxExponent(-1){
+Poly::Poly():arr(NULL), maxExponent(-1)
+{
     // cout << "Default Constructor at " << this << endl;
 }
 
@@ -129,7 +129,8 @@ Poly::Poly(const Poly& p):
     //set all elements to 0
     this->resetArr();
 
-    if(this != &p){
+    if(this != &p)
+    {
         for(int i = 0; i <= this->maxExponent; i++)
         {
             arr[i] = p.arr[i];
@@ -155,7 +156,8 @@ Poly& Poly::operator=(const Poly& p)
 {
     if(this != &p)
     {
-        if(maxExponent != -1){
+        if(maxExponent != -1)
+        {
             delete[] this->arr;
         }
 
@@ -192,13 +194,15 @@ Poly Poly::operator+(const Poly& p)
             //add coefficient
             int new_coeff = coeff1 + coeff2;
 
-            if(new_coeff != 0){
+            if(new_coeff != 0)
+            {
                 //set coefficient
                 newPoly.setCoeff(new_coeff,exp);
             }
         }
         return newPoly;
-    }else{
+    }else
+    {
         return Poly();
     }
 }
@@ -245,20 +249,20 @@ Poly Poly::operator*(const Poly& p)
     Poly newPoly;
     for(int i = 0; i <= this->maxExponent; i++)
     {
-        if(this->arr[i] != 0){
-            for(int j = 0; j <= p.maxExponent; j++)
-            {
-                if(p.arr[j] != 0){
-                    int coeff1 = this->arr[i];
-                    int coeff2 = p.arr[j];
-                    int coeff = coeff1 * coeff2;
-                    int exp = i + j;
-                    Poly temp(coeff, exp);
-                    newPoly += temp;
-                }
-            }
-        }
-    }
+        if(this->arr[i] == 0)//skip if coefficient = 0
+            continue;
+        for(int j = 0; j <= p.maxExponent; j++)
+        {
+            if(p.arr[j] == 0)//skip if coefficient = 0
+                continue;
+            int coeff1 = this->arr[i];
+            int coeff2 = p.arr[j];
+            int coeff = coeff1 * coeff2;
+            int exp = i + j;
+            Poly temp(coeff, exp);
+            newPoly += temp;
+        }//end of inner for loop
+    }//end of outer for loop
 
     return newPoly;
 }
@@ -316,7 +320,8 @@ bool Poly::operator==(const Poly& p)
     //these 2 poly objects contain 2 different polynomial representations
     for(int i = 0; i <= minExp; i++)
     {
-        if(this->arr[i] != p.arr[i]){
+        if(this->arr[i] != p.arr[i])
+        {
             isSame = false;
             break;
         }
@@ -327,7 +332,6 @@ bool Poly::operator==(const Poly& p)
     //which indicates inequality
     if(isSame && maxExp != minExp)
     {
-        cout << "Larger poly's remaining elements need zeo-checks" << endl;
         const Poly& largerPoly = this->maxExponent > p.maxExponent ? *this : p;
         for(int i = minExp + 1; i <= maxExp; i++)
         {
@@ -390,7 +394,8 @@ bool Poly::operator>>(const string line)
     ssize.clear();
 
     //no element or only 1 elemet is present
-    if(size <= 1){
+    if(size <= 1)
+    {
         // cout << "no element or only 1 elemet is present" << endl;
         return false;
     }
@@ -439,7 +444,8 @@ int Poly::getCoeff(int exp) const
     if(exp >= 0 && exp <= this->maxExponent)
     {
         return this->arr[exp];
-    }else{
+    }else
+    {
         return 0;
     }
 }
@@ -459,7 +465,8 @@ void Poly::setCoeff(int coeff, int exp)
     {
         //create a new array with the size of the new exponent
         int* newArr = new int[exp + 1];
-        for(int i = 0; i <= exp; i++){
+        for(int i = 0; i <= exp; i++)
+        {
             newArr[i] = 0;
         }
         //copy over elements
@@ -468,7 +475,8 @@ void Poly::setCoeff(int coeff, int exp)
             newArr[i] = this->arr[i];
         }
         //free up the space for the internal array
-        if(this->maxExponent != -1){
+        if(this->maxExponent != -1)
+        {
             delete[] this->arr;
             this->arr = NULL;
         }
