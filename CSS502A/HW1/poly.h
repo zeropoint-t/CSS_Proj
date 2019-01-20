@@ -22,35 +22,39 @@ using namespace std;
 
 class Poly
 {
+    //prints a polynomial function: ex. +15x^11 +15x^6 -15
     friend ostream & operator << (ostream &out, const Poly &p);
+
+    //enter one coefficient and an exponent repeatedly, Enters -1 for both when done
+    //to set A, Poly A(2,7); so that A is +5x^7 -4x^3 +10x –2
+    //the user enters the pairs in any order:5 7 10 1 -4 3 -2 0 -1 -1 on one line or multiple lines.
+    //pre condition: exponent must be non-negative or it defaults to 0
     friend istream & operator >> (istream &in, Poly &p) ;
 public:
-    Poly();
-    Poly(int, int = 0);
-    Poly(const Poly&);
-    ~Poly();
+    
+    Poly();                     //default constructor
+    Poly(int32_t, int32_t = 0); //constructor that takes coefficient & exponent(defaults to 0 if not provided)
+    Poly(const Poly&);          //copy constructor
+    ~Poly();                    //destructor
 
-    Poly& operator=(const Poly&);
-    Poly operator+(const Poly&);
-    Poly operator-(const Poly&);
-    Poly operator*(const Poly&);
-    Poly& operator+=(const Poly&);
-    Poly& operator-=(const Poly&);
-    Poly& operator*=(const Poly&);
-    bool operator==(const Poly&);
-    bool operator!=(const Poly&);
-    bool operator>>(const string);
+
+    Poly& operator=(const Poly&);   //assign poly object
+    Poly operator+(const Poly&);    //add 2 poly objects
+    Poly operator-(const Poly&);    //subtract 2  poly objects
+    Poly operator*(const Poly&);    //multiply 2 poly objects
+    Poly& operator+=(const Poly&);  //add & assign to left operand
+    Poly& operator-=(const Poly&);  //subtract & assign to left operand
+    Poly& operator*=(const Poly&);  //multiply & assign to left operand
+    bool operator==(const Poly&);   //equality, 2 poly objects are identical
+    bool operator!=(const Poly&);   //inequality, 2 poly objects are different
+    bool operator>>(const string);  //set coefficients with a string. ex (5 7 -4 3 10 1 -2 0) = +5x^7 -4x^3 +10x -2
  
-    int getCoeff(int) const;
-    void setCoeff(int,int);
-    int getSize() const{
-        return maxExponent + 1;
-    }
+    int32_t getCoeff(int32_t) const;    //returns a coeff of the exp(0 if the coeff is not found)
+    void setCoeff(int32_t,int32_t); //sets a coefficient and exponent. mutator
 private:
-    //an array that stores coefficients at subscripts corresponding to exponents
-    int* arr;
-    //maximum exponent
-    int maxExponent;
+    int32_t* arr;           //pointer to first element of array
+    int32_t maxExponent;    //maximum exponent
+    void resetArr();        //sets 0 to all elements in arr
 };
 
 #endif

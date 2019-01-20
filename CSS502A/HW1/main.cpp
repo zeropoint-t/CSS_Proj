@@ -8,19 +8,31 @@
 #include <iostream>
 using namespace std;
 int main() {
+
+	// Poly A(5,2), B(4,20);
+	// A >> "6 3 8 7 2 1 9 2 -1 -1";
+	// B >> "6 3 8 7 2 1 9 2 -1 -1";
+
+	// cout << ((A == B) ? "A == B" : "A is not == B") << endl;
+
 	Poly A(5, 7), B(3, 4), C(2), D(A), X, Y;
 	Poly A2, B2, Z1, Z2;
 
 	// set polynomials A and B to desired values
 	// A = +5x^7 -4x^3 +10x -2
 	// B = +3x^4 +1x^3 
-	cout << "Enter terms for polynomial A.  Enter a coefficient " << endl
-		<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
+
+	// cout << "Enter terms for polynomial A.  Enter a coefficient " << endl
+	// 	<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
 	cin >> A;                                     // or use a bunch of setCoeff
-	cout << "Enter terms for polynomial B.  Enter a coefficient " << endl
-		<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
+	// A >> "5 7 -4 3 10 1 -2 0 -1 -1";
+
+	// cout << "Enter terms for polynomial B.  Enter a coefficient " << endl
+	// 	<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
 	cin >> B;                                     // or use a bunch of setCoeff
-	
+	// B >> "3 4 1 3 -1 -1";
+
+
 	// outputs exactly what is in quotes: "A = +5x^7 -4x^3 +10x -2"
 	cout << "A =" << A << endl;
 	// outputs exactly what is in quotes: "B = +3x^4 +1x^3"

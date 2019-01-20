@@ -14,12 +14,21 @@
 #include "poly.h"
 
 // --ostream & operator <<-----------------------------------------------------------------------
-// Description: overload cout that prints out a polynomial function: ex. 15x^11 +15x^6 -15
+// Description: overload cout that prints a polynomial function: ex. +15x^11 +15x^6 -15
 // ----------------------------------------------------------------------------------------------
 ostream & operator << (ostream &out, const Poly &p) 
 {
-    if(p.maxExponent <= 0){
-        out << " 0";
+    if(p.maxExponent <= 0){//only 1 term with 0 exponent
+        if(p.arr[0] < 0)
+        {
+            out << " -" << p.arr[0];
+        }else if(p.arr[0] > 0)
+        {
+            out << " +" << p.arr[0];
+        }else//must be 0
+        {
+            out << p.arr[0];
+        }
     }else{
         for(int i = p.maxExponent; i >= 0; i--)
         {
@@ -29,7 +38,7 @@ ostream & operator << (ostream &out, const Poly &p)
                 {
                     if(p.arr[i] < 0)
                     {
-                        out << " " << p.arr[i] << "x";
+                        out << " " << p.arr[i] << "x";//negative number already has "-" sign
                     }else
                     {
                         out << " +" << p.arr[i] << "x";
@@ -38,7 +47,7 @@ ostream & operator << (ostream &out, const Poly &p)
                 {
                     if(p.arr[i] < 0)
                     {
-                        out << " " << p.arr[i];
+                        out << " " << p.arr[i];//negative number already has "-" sign
                     }else
                     {
                         out << " +" << p.arr[i];
@@ -47,7 +56,7 @@ ostream & operator << (ostream &out, const Poly &p)
                 {
                     if(p.arr[i] < 0)
                     {
-                        out << " " << p.arr[i] << "x" << "^" << i;
+                        out << " " << p.arr[i] << "x" << "^" << i;//negative number already has "-" sign
                     }else{
                         out << " +" << p.arr[i] << "x" << "^" << i;
                     }
@@ -65,9 +74,10 @@ ostream & operator << (ostream &out, const Poly &p)
 istream & operator >> (istream &in, Poly &p) 
 {
     //reset p
-    delete[] p.arr;
-    p.maxExponent = -1;
-    p.setCoeff(0,0);
+    p.resetArr();
+    // delete[] p.arr;
+    // p.maxExponent = -1;
+    // p.setCoeff(0,0);
 
     //Loop until break is called. 
     while(true)
@@ -75,6 +85,7 @@ istream & operator >> (istream &in, Poly &p)
         //take user inputs
         string line;
 
+        //take input from a user
         getline(cin, line);
 
         //assign coeff and exp pairs
@@ -83,8 +94,6 @@ istream & operator >> (istream &in, Poly &p)
 
         if(terminate)
             break;
-
-        // cout << endl;
     }//end while
     return in; 
 }
@@ -98,16 +107,15 @@ Poly::Poly():arr(NULL), maxExponent(-1){
 
 // --Poly::Poly(int coeff, int exp)------------------------------------------------------------
 // Description: a constructor that takes initial coefficient and exponent
+// Precondition: exponent must be non negative
 // --------------------------------------------------------------------------------------------
 Poly::Poly(int coeff, int exp):
-    maxExponent(exp),
-    arr(new int[exp + 1])
+    maxExponent(exp < 0 ? 0 : exp),
+    arr(new int[(exp < 0 ? 0 : exp) + 1])//initialize at least 1 element
 {
-    for(int i = 0; i <= this->maxExponent; i++)
-    {
-        arr[i] = 0;
-    }
-
+    //set all elements to 0
+    this->resetArr();
+    //set coeff to exponent
     this->arr[this->maxExponent] = coeff;
 }
 
@@ -118,11 +126,8 @@ Poly::Poly(const Poly& p):
     maxExponent(p.maxExponent), 
     arr(new int[p.maxExponent + 1])
 {
-    // cout << "Copy Constructor Poly(const Poly& p) at " << this << endl;
-    for(int i = 0; i <= this->maxExponent; i++)
-    {
-        arr[i] = 0;
-    }
+    //set all elements to 0
+    this->resetArr();
 
     if(this != &p){
         for(int i = 0; i <= this->maxExponent; i++)
@@ -144,7 +149,7 @@ Poly::~Poly()
 }
 
 // --Poly& Poly::operator=(const Poly& p)------------------------------------------------------
-// Description: operator overload of = which deep copies the operand
+// Description: operator overload of = which performs a deep copy of the operand
 // --------------------------------------------------------------------------------------------
 Poly& Poly::operator=(const Poly& p)
 {
@@ -248,7 +253,6 @@ Poly Poly::operator*(const Poly& p)
                     int coeff2 = p.arr[j];
                     int coeff = coeff1 * coeff2;
                     int exp = i + j;
-                    // cout << "multiplying" << endl;
                     Poly temp(coeff, exp);
                     newPoly += temp;
                 }
@@ -265,7 +269,6 @@ Poly Poly::operator*(const Poly& p)
 // --------------------------------------------------------------------------------------------
 Poly& Poly::operator+=(const Poly& p)
 {
-    // cout << "operator+= called at " << &p << endl;
     *this = *this + p;
     return *this;
 }
@@ -297,26 +300,45 @@ Poly& Poly::operator*=(const Poly& p)
 // --------------------------------------------------------------------------------------------
 bool Poly::operator==(const Poly& p)
 {
-    //if maxExponent is different, these are 2 poly objects contain 
-    //different polynomial representations
-    if(this->maxExponent != p.maxExponent)
-        return false;
+    //flags true or false
+    bool isSame = true;
+
+    //these 2 variables are necessary if 2 poly objects have different lengths which requires additional check
+    int32_t maxExp = this->maxExponent > p.maxExponent ? this->maxExponent : p.maxExponent;
+    int32_t minExp = this->maxExponent < p.maxExponent ? this->maxExponent : p.maxExponent;
 
     //both are initialized with default constructor
     //so they are the same
-    if(this->maxExponent == -1)
+    if(this->maxExponent == -1 && p.maxExponent == -1)
         return true;
     
     //if any coefficients are different from one another
     //these 2 poly objects contain 2 different polynomial representations
-    for(int i = 0; i <= this->maxExponent; i++)
+    for(int i = 0; i <= minExp; i++)
     {
-        if(this->arr[i] != p.arr[i])
-            return false;
+        if(this->arr[i] != p.arr[i]){
+            isSame = false;
+            break;
+        }
+    }
+
+    //2 polys appear to be the same up to minExp
+    //find out if contain non-zero values exist in remaining elements in larger poly
+    //which indicates inequality
+    if(isSame && maxExp != minExp)
+    {
+        cout << "Larger poly's remaining elements need zeo-checks" << endl;
+        const Poly& largerPoly = this->maxExponent > p.maxExponent ? *this : p;
+        for(int i = minExp + 1; i <= maxExp; i++)
+        {
+            cout << largerPoly.arr[i] << endl;
+            if(largerPoly.arr[i] != 0)
+                isSame = false;
+        }
     }
 
     //if it reaches here, these represent the same polynomials
-    return true;
+    return isSame;
 }
 
 // --Poly& Poly::operator!=(const Poly& p)-----------------------------------------------------
@@ -367,6 +389,12 @@ bool Poly::operator>>(const string line)
     }
     ssize.clear();
 
+    //no element or only 1 elemet is present
+    if(size <= 1){
+        cout << "no element or only 1 elemet is present" << endl;
+        return false;
+    }
+
     //fill in inputs array
     int inputs[size];
     for (int i = 0; i < size; i++) 
@@ -408,7 +436,7 @@ bool Poly::operator>>(const string line)
 // --------------------------------------------------------------------------------------------
 int Poly::getCoeff(int exp) const
 {
-    if(exp <= this->maxExponent && exp >= 0)
+    if(exp >= 0 && exp <= this->maxExponent)
     {
         return this->arr[exp];
     }else{
@@ -417,13 +445,15 @@ int Poly::getCoeff(int exp) const
 }
 
 // --Poly::setCoeff(int coeff, int exp)--------------------------------------------------------
-// Description: This is mutator function that sets a coefficient for the exponent.
-//              If exp parameter is larger than current maxExponent, resize the internal array
-//              and sets the new coefficient for the exponent
+// Description: This is a mutator function that sets coefficient & exponent.
+//              If exp is larger than current maxExponent, it resizes the internal array
+// Precondition: exponent must be non-negative
 // --------------------------------------------------------------------------------------------
 void Poly::setCoeff(int coeff, int exp)
 {
-    // cout << "setCoeff called" << endl;
+    //ensure that exponent is non-negative
+    if(exp < 0) exp = 0;
+
     //resize arr if new exp is bigger than currnet exp
     if(exp > this->maxExponent)
     {
@@ -453,6 +483,17 @@ void Poly::setCoeff(int coeff, int exp)
     if(exp >= 0 && exp <= this->maxExponent)
     {
         this->arr[exp] = coeff;
+    }
+}
+
+// --Poly::resetArr()--------------------------------------------------------
+// Description: Sets all elements in arr to 0
+// --------------------------------------------------------------------------------------------
+void Poly::resetArr()
+{
+    for(int i = 0; i <= this->maxExponent; i++)
+    {
+        this->arr[i] = 0;
     }
 }
 
