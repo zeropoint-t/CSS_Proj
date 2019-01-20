@@ -391,7 +391,7 @@ bool Poly::operator>>(const string line)
 
     //no element or only 1 elemet is present
     if(size <= 1){
-        cout << "no element or only 1 elemet is present" << endl;
+        // cout << "no element or only 1 elemet is present" << endl;
         return false;
     }
 

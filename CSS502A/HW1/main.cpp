@@ -22,13 +22,13 @@ int main() {
 	// A = +5x^7 -4x^3 +10x -2
 	// B = +3x^4 +1x^3 
 
-	// cout << "Enter terms for polynomial A.  Enter a coefficient " << endl
-	// 	<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
+	cout << "Enter terms for polynomial A.  Enter a coefficient " << endl
+		<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
 	cin >> A;                                     // or use a bunch of setCoeff
 	// A >> "5 7 -4 3 10 1 -2 0 -1 -1";
 
-	// cout << "Enter terms for polynomial B.  Enter a coefficient " << endl
-	// 	<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
+	cout << "Enter terms for polynomial B.  Enter a coefficient " << endl
+		<< "then exponent for each term. Enter -1 -1 to terminate." << endl;
 	cin >> B;                                     // or use a bunch of setCoeff
 	// B >> "3 4 1 3 -1 -1";
 
