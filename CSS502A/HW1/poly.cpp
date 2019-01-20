@@ -304,8 +304,8 @@ bool Poly::operator==(const Poly& p)
     bool isSame = true;
 
     //these 2 variables are necessary if 2 poly objects have different lengths which requires additional check
-    int32_t maxExp = this->maxExponent > p.maxExponent ? this->maxExponent : p.maxExponent;
-    int32_t minExp = this->maxExponent < p.maxExponent ? this->maxExponent : p.maxExponent;
+    int maxExp = this->maxExponent > p.maxExponent ? this->maxExponent : p.maxExponent;
+    int minExp = this->maxExponent < p.maxExponent ? this->maxExponent : p.maxExponent;
 
     //both are initialized with default constructor
     //so they are the same
